@@ -27,6 +27,7 @@ const initialCards = [
 
 //Declarations
 const DOM = document;
+const page = DOM.querySelector('.page');
 const profileName = DOM.querySelector('.profile__name');
 const profileDescription = DOM.querySelector('.profile__description');
 const editButton = DOM.querySelector('.profile__edit-button');
@@ -75,10 +76,26 @@ function submitProfile(evt){
 
 function submitCard(evt){
   evt.preventDefault();
-  const newCard = getCardElement(evt.target.title.value, evt.target.url.value);
+  const newCard = createCardElement(evt.target.title.value, evt.target.url.value);
   galleryCardList.prepend(newCard);
   evt.target.reset();
   cardEditor.classList.toggle('modal_opened');
+}
+
+function createImagePopup(name, link) {
+  const popupTemplate = DOM.querySelector('#image-popup').content.querySelector('.image-popup');
+  const popupElement = popupTemplate.cloneNode(true);
+  const img = popupElement.querySelector('.image-popup__image');
+  const cancelButton = popupElement.querySelector('.image-popup__cancel-button');
+  const handleDeleteClick = () => {
+    popupElement.remove();
+  }
+
+  img.alt = name;
+  img.src = link;
+  cancelButton.addEventListener('click', handleDeleteClick);
+  
+  return popupElement;
 }
 
 /**
@@ -87,7 +104,7 @@ function submitCard(evt){
  * @param {string} link string of the url for the image to add to the card 
  * @returns object representing html element to be added to card section
  */
-function getCardElement(name, link){
+function createCardElement(name, link){
   const cardElement = cardTemplate.cloneNode(true);
   const img = cardElement.querySelector('.card__image');
   const title = cardElement.querySelector('.card__title');
@@ -97,10 +114,11 @@ function getCardElement(name, link){
     evt.target.classList.toggle('card__button_type_like-active');
   }
   const handleDeleteClick = () => {
-    cardElement.remove()
+    cardElement.remove();
   }
   const handleImageClick = () => {
-    console.log('click')
+    console.log('click');
+    page.append(createImagePopup(name, link));
   }
   img.src = link;
   img.alt = name;
@@ -110,6 +128,8 @@ function getCardElement(name, link){
   img.addEventListener('click', handleImageClick);
   return cardElement;
 }
+
+
 
 function handleLikeClick(evt){
   evt.target.classList.toggle('card__button_type_like-active');
@@ -127,5 +147,5 @@ cardForm.addEventListener('submit', submitCard);
 
 //Render loop
 initialCards.forEach((card) => {
-  galleryCardList.append(getCardElement(card.name, card.link));
+  galleryCardList.append(createCardElement(card.name, card.link));
 })
