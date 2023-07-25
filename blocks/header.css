@@ -1,0 +1,29 @@
+.header{
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: rgba(84, 84, 84, .7);
+  padding: 45px 0 41px;
+}
+
+.header__logo{
+  width: 173px;
+  height: 33px;
+}
+
+/* @media screen and (max-width: 919px){
+  .header{
+    padding: 45px 19px 41px;
+  }
+} */
+
+@media screen and (max-width: 580px){
+  .header{
+    padding: 28px 0 32px;
+  }
+
+  .header__logo{
+    margin-left: 27px;
+    width: 126px;
+    height: 24px;
+  }
+}

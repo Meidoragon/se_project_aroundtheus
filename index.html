@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="author" content="Colton Shedden" />
+      <title>Around the U.S.</title>
+      <link href="./pages/index.css" rel="stylesheet" />
+  </head>
+  <body class="page">
+    <header class="header">
+      <img 
+        class="header__logo"
+        alt="Around the US logo"
+        src="./images/atus_logo_light.svg"
+      />
+    </header>
+    <main>
+      <section class="profile">
+        <img
+          class="profile__avatar"
+          alt="Jacques Cousteau"
+          src="./images/jacques-cousteau.png"
+        />
+        <div class="profile__information">
+          <h1 class="profile__name">Jacques Cousteau</h1>    
+          <button class="profile__edit-button" type="button" aria-label="edit profile"></button>
+          <p class="profile__description">Explorer</p>
+        </div>
+        <button class="profile__add-button" type="button" aria-label="add card"></button>
+      </section>
+      <section class="gallery">
+        <ul class="gallery__cards">
+        </ul>
+      </section>
+      <section class="modal">
+        <form id="profile-form" class="modal__container">
+          <h2 class="modal__title">Edit profile</h2>
+          <fieldset class="modal__form">
+            <input
+              type="text"
+              id="name"
+              class="modal__form-field modal__form-field_value_name"
+              placeholder="Name"
+              required
+            />
+            <input
+              type="text"
+              id="description"
+              class="modal__form-field modal__form-field_value_description"
+              placeholder="Description"
+            />
+          </fieldset>
+          <button type="submit" id="submit_button" class="modal__submit-button">Save</button>
+          <button type="button" id="cancel_button" class="modal__cancel-button"></button>
+        </form>
+      </section>
+      <section class="modal">
+        <form id="card-form" class="modal__container">
+          <h2 class="modal__title">New Place</h2>
+          <fieldset class="modal__form">
+            <input
+              type="text"
+              id="title"
+              class="modal__form-field modal__form-field_value_name"
+              placeholder="Title"
+              required
+            />
+            <input
+              type="text"
+              id="url"
+              class="modal__form-field modal__form-field_value_description"
+              placeholder="Image URL"
+            />
+          </fieldset>
+          <button type="submit" id="submit_button" class="modal__submit-button">Save</button>
+          <button type="button" id="cancel_button" class="modal__cancel-button"></button>
+        </form>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__copywrite">© 2022 Around The U.S.</p>
+    </footer>
+    <template id="card_template">
+      <li class="card">
+        <img class="card__image" src="" alt=""/>
+        <div class="card__info">
+          <h2 class="card__title"></h2>
+          <button class="card__button card__button_type_like-inactive" type="button" aria-label="like"></button>
+        </div>
+        <button class="card__button card__button_type_delete" type="button" aria-label="delete"></button>
+      </li>
+    </template>
+    <template id="image-popup">
+      <section class="image-popup">
+        <div class="image-popup__wrapper">
+          <img class="image-popup__image" src="" alt=""/>
+          <button type="button" id="cancel_button" class="image-popup__cancel-button" aria-label="cancel"></button>
+        </div>
+      </section>
+    </template>
+    <script src="./scripts/index.js"></script>
+  </body>
+</html>

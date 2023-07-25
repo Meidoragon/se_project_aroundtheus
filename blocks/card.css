@@ -1,0 +1,70 @@
+.card{
+  width: 282px;
+  background-color: #FFF;
+  border-radius: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.card__image{
+  height: 282px;
+  width: 282px;
+}
+
+.card__info{
+  padding: 25px 20px;
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+  box-sizing: border-box;
+}
+
+.card__title{
+  max-width: 220px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 29px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card__button{
+  padding: 0;
+  border: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: #0000;
+  transition: opacity .2s linear;
+}
+
+.card__button:hover{
+  cursor: pointer;
+  opacity: 50%;
+
+}
+
+.card__button_type_like-inactive{
+  width: 21px;
+  height: 18px;
+  background-image: url(../images/heart.svg);
+}
+
+.card__button_type_like-active{
+  background-image: url(../images/fill-heart.svg);
+}
+
+.card__button_type_delete{
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  width: 18px;
+  height: 19px;
+  background-image: url(../images/trash.svg);
+}
+

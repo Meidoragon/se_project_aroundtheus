@@ -1,0 +1,32 @@
+.footer{
+  padding: 67px 0 60px;
+}
+
+.footer__copywrite{
+  margin: 0;
+  color: #545454;
+  font-size: 18px;
+  line-height: 1.2;
+  max-width: 90%;
+}
+
+@media screen and (max-width: 919px) {
+  .footer{
+    padding: 67px 0 60px 19px;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .footer{
+    padding: 48px 0 36px 19px;
+  }
+  .footer__copywrite{
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 335px){
+  .footer{
+    padding: 48px 0 36px 11px;
+  }
+}

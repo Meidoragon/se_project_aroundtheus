@@ -1,0 +1,36 @@
+.image-popup{
+  background-color: #0008; /*black that is roughly 50% transparent */
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.image-popup__wrapper{
+  position: relative;
+  margin: auto;
+  padding: 0;
+}
+
+.image-popup__image{
+  max-width: 75vw;
+  max-height: 75vh;
+}
+
+.image-popup__cancel-button{
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  background-color: #0000;
+  background-image: url(../images/Close\ Icon.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: none;
+}
