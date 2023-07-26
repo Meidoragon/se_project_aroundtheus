@@ -1,7 +1,4 @@
 .image-popup{
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: #0008; /*black that is roughly 50% transparent */
   position: fixed;
   width: 100%;
@@ -10,11 +7,10 @@
   left: 0;
 }
 
-.image-popup__container{
-  box-sizing: border-box;
+.image-popup__wrapper{
   position: relative;
-  width: fit-content;
-  margin: 0 auto;
+  margin: auto;
+  padding: 0;
 }
 
 .image-popup__image{
@@ -23,7 +19,6 @@
 }
 
 .image-popup__cancel-button{
-  /* display: none; */
   padding: 0;
   margin: 0;
   position: absolute;
@@ -38,17 +33,4 @@
   background-repeat: no-repeat;
   background-size: cover;
   border: none;
-}
-
-.image-popup__cancel-button:hover{
-  cursor: pointer;
-}
-
-@media screen and (max-width: 596px){
-  .image-popup__cancel-button{
-    right: 8px;
-    top: -39px;
-    width: 21px;
-    height: 21px;
-  }
 }
