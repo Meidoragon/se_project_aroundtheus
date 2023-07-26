@@ -39,13 +39,13 @@ const profileEditor = modals[0];
 const profileForm = DOM.forms['profile-form'];
 const editorName = profileForm.elements.name;
 const editorDescription = profileForm.elements.description;
-const editorCancelButton = profileForm.elements.cancel_button;
+const editorCancelButton = profileForm.elements.profile_cancel_button;
 
 const cardEditor = modals[1];
 const cardForm = DOM.forms['card-form'];
 const cardName = cardForm.elements.name;
 const cardImageURL = cardForm.elements.url;
-const cardCancelButton = cardForm.elements.cancel_button;
+const cardCancelButton = cardForm.elements.card_cancel_button;
 
 const imagePreview = modals[2];
 const previewImage = imagePreview.querySelector('.modal__image');

@@ -29,10 +29,10 @@
         </div>
         <button class="profile__add-button" type="button" aria-label="add card"></button>
       </section>
-      <section class="gallery">
+      <div class="gallery">
         <ul class="gallery__cards">
         </ul>
-      </section>
+      </div>
       <section class="modal">
         <form id="profile-form" class="modal__form-container">
           <h2 class="modal__form-title">Edit profile</h2>
@@ -51,8 +51,8 @@
               placeholder="Description"
             />
           </fieldset>
-          <button type="submit" id="submit_button" class="modal__submit-button">Save</button>
-          <button type="button" id="cancel_button" class="modal__cancel-button" aria-label="cancel"></button>
+          <button type="submit" id="profile_submit_button" class="modal__submit-button">Save</button>
+          <button type="button" id="profile_cancel_button" class="modal__cancel-button" aria-label="cancel"></button>
         </form>
       </section>
       <section class="modal">
@@ -73,8 +73,8 @@
               placeholder="Image URL"
             />
           </fieldset>
-          <button type="submit" id="submit_button" class="modal__submit-button">Create</button>
-          <button type="button" id="cancel_button" class="modal__cancel-button" aria-label="cancel"></button>
+          <button type="submit" id="card_submit_button" class="modal__submit-button">Create</button>
+          <button type="button" id="card_cancel_button" class="modal__cancel-button" aria-label="cancel"></button>
         </form>
       </section>
       <section class="modal">
@@ -84,8 +84,8 @@
             src="#"
             alt=""
           />
-          <h2 class="modal__image-title"></h2>
-          <button type="button" id="cancel_button" class="modal__cancel-button modal__image-cancel-button" aria-label="cancel"></button>
+          <h2 class="modal__image-title">.</h2>
+          <button type="button" id="preview_cancel_button" class="modal__cancel-button modal__image-cancel-button" aria-label="cancel"></button>
         </div>
       </section>
     </main>
