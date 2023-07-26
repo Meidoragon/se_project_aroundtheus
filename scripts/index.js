@@ -33,21 +33,21 @@ const editButton = DOM.querySelector('.profile__edit-button');
 const cardAddButton = DOM.querySelector('.profile__add-button');
 const galleryCardList = DOM.querySelector('.gallery__cards');
 const cardTemplate = DOM.querySelector("#card_template").content.querySelector('.card');
-const modals =  DOM.querySelectorAll('.modal');
+const cancelButtons = DOM.querySelectorAll('.modal__cancel-button');
 
-const profileEditor = modals[0];
+const profileEditor = DOM.querySelector('.profile-modal');
 const profileForm = DOM.forms['profile-form'];
 const editorName = profileForm.elements.name;
 const editorDescription = profileForm.elements.description;
 const editorCancelButton = profileForm.elements.profile_cancel_button;
 
-const cardEditor = modals[1];
+const cardEditor = DOM.querySelector('.card-modal');
 const cardForm = DOM.forms['card-form'];
 const cardName = cardForm.elements.name;
 const cardImageURL = cardForm.elements.url;
 const cardCancelButton = cardForm.elements.card_cancel_button;
 
-const imagePreview = modals[2];
+const imagePreview = DOM.querySelector('.preview-modal');
 const previewImage = imagePreview.querySelector('.modal__image');
 const previewTitle = imagePreview.querySelector('.modal__image-title');
 const previewCancelButton = imagePreview.querySelector('.modal__cancel-button');
@@ -56,10 +56,10 @@ const previewCancelButton = imagePreview.querySelector('.modal__cancel-button');
 /**
  * Toggles the display state of the profile editor window
  */
-function enableProfileEditor(){
+function openProfileEditor(){
   editorName.value = profileName.textContent;
   editorDescription.value = profileDescription.textContent;
-  toggleModal(profileEditor);
+  openPopup(profileEditor);
 }
 
 function displayImagePreview(title, image){
@@ -68,11 +68,15 @@ function displayImagePreview(title, image){
   previewImage.src = image;
   previewImage.alt = title;
   previewTitle.textContent = title;
-  toggleModal(imagePreview);
+  openPopup(imagePreview);
 }
 
-function toggleModal(modal){
-  modal.classList.toggle('modal_opened');
+function openPopup(popup){
+  popup.classList.add('modal_opened');
+}
+
+function closePopup(popup){
+  popup.classList.remove('modal_opened');
 }
 
 /**
@@ -83,7 +87,7 @@ function submitProfile(evt){
   evt.preventDefault();
   profileName.textContent = editorName.value;
   profileDescription.textContent = editorDescription.value;
-  toggleModal(profileEditor);
+  closePopup(profileEditor);
 }
 
 /**
@@ -95,7 +99,7 @@ function submitCard(evt){
   const newCard = createCardElement(evt.target.title.value, evt.target.url.value);
   galleryCardList.prepend(newCard);
   evt.target.reset();
-  toggleModal(cardEditor);
+  closePopup(cardEditor);
 }
 
 /**
@@ -129,22 +133,14 @@ function createCardElement(name, link){
 }
 
 //Event Listeners
-editButton.addEventListener('click', enableProfileEditor);
-cardAddButton.addEventListener('click', () => {
-  toggleModal(cardEditor);
-});
-cardCancelButton.addEventListener('click', () => {
-  toggleModal(cardEditor);
-  cardForm.reset();
-});
-previewCancelButton.addEventListener('click', () => {
-  toggleModal(imagePreview);
-});
-editorCancelButton.addEventListener('click', () => {
-  toggleModal(profileEditor);
-});
+editButton.addEventListener('click', openProfileEditor);
+cardAddButton.addEventListener('click', () => openPopup(cardEditor));
 profileForm.addEventListener('submit', submitProfile);
 cardForm.addEventListener('submit', submitCard);
+cancelButtons.forEach((button) => {
+  const popup = button.closest('.popup');
+  button.addEventListener('click', () => closePopup(popup));
+})
 
 //Render loop
 initialCards.forEach((card) => {
