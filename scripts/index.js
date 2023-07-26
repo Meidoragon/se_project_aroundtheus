@@ -63,8 +63,6 @@ function openProfileEditor(){
 }
 
 function displayImagePreview(title, image){
-  console.log(title);
-  console.log(image);
   previewImage.src = image;
   previewImage.alt = title;
   previewTitle.textContent = title;
@@ -138,7 +136,7 @@ cardAddButton.addEventListener('click', () => openPopup(cardEditor));
 profileForm.addEventListener('submit', submitProfile);
 cardForm.addEventListener('submit', submitCard);
 cancelButtons.forEach((button) => {
-  const popup = button.closest('.popup');
+  const popup = button.closest('.modal');
   button.addEventListener('click', () => closePopup(popup));
 })
 
