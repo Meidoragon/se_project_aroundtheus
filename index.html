@@ -34,48 +34,59 @@
         </ul>
       </section>
       <section class="modal">
-        <form id="profile-form" class="modal__container">
-          <h2 class="modal__title">Edit profile</h2>
+        <form id="profile-form" class="modal__form-container">
+          <h2 class="modal__form-title">Edit profile</h2>
           <fieldset class="modal__form">
             <input
               type="text"
               id="name"
-              class="modal__form-field modal__form-field_value_name"
+              class="modal__form-field"
               placeholder="Name"
               required
             />
             <input
               type="text"
               id="description"
-              class="modal__form-field modal__form-field_value_description"
+              class="modal__form-field"
               placeholder="Description"
             />
           </fieldset>
           <button type="submit" id="submit_button" class="modal__submit-button">Save</button>
-          <button type="button" id="cancel_button" class="modal__cancel-button"></button>
+          <button type="button" id="cancel_button" class="modal__cancel-button" aria-label="cancel"></button>
         </form>
       </section>
       <section class="modal">
-        <form id="card-form" class="modal__container">
-          <h2 class="modal__title">New Place</h2>
+        <form id="card-form" class="modal__form-container">
+          <h2 class="modal__form-title">New Place</h2>
           <fieldset class="modal__form">
             <input
               type="text"
               id="title"
-              class="modal__form-field modal__form-field_value_name"
+              class="modal__form-field"
               placeholder="Title"
               required
             />
             <input
               type="text"
               id="url"
-              class="modal__form-field modal__form-field_value_description"
+              class="modal__form-field"
               placeholder="Image URL"
             />
           </fieldset>
-          <button type="submit" id="submit_button" class="modal__submit-button">Save</button>
-          <button type="button" id="cancel_button" class="modal__cancel-button"></button>
+          <button type="submit" id="submit_button" class="modal__submit-button">Create</button>
+          <button type="button" id="cancel_button" class="modal__cancel-button" aria-label="cancel"></button>
         </form>
+      </section>
+      <section class="modal">
+        <div class="modal__image-container">
+          <img
+            class="modal__image"
+            src="#"
+            alt=""
+          />
+          <h2 class="modal__image-title"></h2>
+          <button type="button" id="cancel_button" class="modal__cancel-button modal__image-cancel-button" aria-label="cancel"></button>
+        </div>
       </section>
     </main>
     <footer class="footer">
