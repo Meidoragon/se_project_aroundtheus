@@ -42,6 +42,8 @@
               id="name"
               class="modal__form-field"
               placeholder="Name"
+              minlength=2
+              maxlength=40
               required
             />
             <input
@@ -49,6 +51,9 @@
               id="description"
               class="modal__form-field"
               placeholder="Description"
+              minlength=2
+              maxlength=200
+              required
             />
           </fieldset>
           <button type="submit" id="profile_submit_button" class="modal__submit-button">Save</button>
@@ -64,13 +69,16 @@
               id="title"
               class="modal__form-field"
               placeholder="Title"
+              minlength=1
+              maxlength=30
               required
             />
             <input
-              type="text"
+              type="url"
               id="url"
               class="modal__form-field"
               placeholder="Image URL"
+              required
             />
           </fieldset>
           <button type="submit" id="card_submit_button" class="modal__submit-button">Create</button>
