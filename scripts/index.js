@@ -71,10 +71,28 @@ function displayImagePreview(title, image){
 
 function openPopup(popup){
   popup.classList.add('modal_opened');
+  popup.addEventListener("click", handleClick);
+  DOM.addEventListener("keydown", handleKeypress);
+}
+
+function handleClick(evt) {
+  const clickedElement = evt.target;
+  if ((clickedElement.classList.contains('modal')) || clickedElement.classList.contains('modal__cancel-button')){
+    closePopup(clickedElement.closest('.modal'))
+  }
+}
+
+function handleKeypress(evt){
+  if (evt.key === 'Escape'){
+    const currentPopup = DOM.querySelector('.modal_opened');
+    closePopup(currentPopup);
+  }
 }
 
 function closePopup(popup){
   popup.classList.remove('modal_opened');
+  DOM.removeEventListener("click", handleClick);
+  DOM.removeEventListener("keydown", handleKeypress);
 }
 
 /**
@@ -135,10 +153,7 @@ editButton.addEventListener('click', openProfileEditor);
 cardAddButton.addEventListener('click', () => openPopup(cardEditor));
 profileForm.addEventListener('submit', submitProfile);
 cardForm.addEventListener('submit', submitCard);
-cancelButtons.forEach((button) => {
-  const popup = button.closest('.modal');
-  button.addEventListener('click', () => closePopup(popup));
-})
+
 
 //Render loop
 initialCards.forEach((card) => {
