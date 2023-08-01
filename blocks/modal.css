@@ -67,13 +67,35 @@
   border: none;
 }
 
-.modal__form-field{
+.modal__label{
+  position: relative;
+}
+
+.modal__input{
   width: 100%;
   padding: 0 0 10px;
   margin: 0;
   font-size: 14px;
   border: none;
   border-bottom: solid #00000033 1px;
+}
+
+.modal__input_type_error{
+  border-bottom: solid #FF0000 1px;
+}
+
+.modal__error{
+  visibility: hidden;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0px;
+  color: #F00;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.modal__error_visible{
+  visibility: visible;
 }
 
 .modal__submit-button{
@@ -86,6 +108,12 @@
   background-color: #000;
   color: #FFF;
   font-size: 18px;
+}
+
+.modal__submit-button_disabled{
+  background-color: #0000;
+  color: #0008;
+  border: solid #0008 2px;
 }
 
 .modal__submit-button:hover{
