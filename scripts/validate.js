@@ -1,4 +1,11 @@
-const options = {
+/**
+ * Code for real time* form validity checking.
+ * 
+ * *Or at least as real time as is feasible. ie: every time the user makes a change to a form
+ */
+
+
+const OPTIONS = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__button",
@@ -7,39 +14,58 @@ const options = {
   errorClass: "modal__error_visible"
 }
 
-const formElement = DOM.querySelector(options.formSelector);
-const formInput = formElement.querySelector(options.inputSelector);
-const formError = formElement.querySelector(`.${formInput.id}-error`);
-
-const showError = (formElement, inputElement, errorMessage) => {
+function showError (options, formElement, inputElement, errorMessage) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(options.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(options.errorClass)
 };
 
-const hideError = (formElement, inputElement) => {
+function hideError (options, formElement, inputElement) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(options.inputErrorClass);
   errorElement.classList.remove(options.errorClass);
   errorElement.textContent = '';
 };
 
-const checkInputValidity = () => {
-  if (formInput.validity.valid) {
-    hideError(formElement, formInput);
+function checkInputValidity (options, formElement, inputElement) {
+  if (inputElement.validity.valid) {
+    hideError(options, formElement, inputElement);
   } else {
-    showError(formElement, formInput, formInput.validationMessage);
+    showError(options, formElement, inputElement, inputElement.validationMessage);
   }
 };
 
-formInput.addEventListener("input", (evt) => {
-  checkInputValidity();
-});
-
-
-const enableValidation = (options) => {
-  
+function setEventListeners(options, formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(options.inputSelector));
+  const buttonElement = formElement.querySelector(options.submitButtonSelector);
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      toggleButtonState(options, inputList, buttonElement);
+      checkInputValidity(options, formElement, inputElement)
+    });
+  });
 };
 
-enableValidation(options); 
+function enableValidation (options) {
+  const formList = Array.from(DOM.querySelectorAll(options.formSelector));
+  formList.forEach((formElement) => {
+    setEventListeners(options, formElement);
+  })
+};
+
+function hasInvalidInput(inputList){
+  return inputList.some((input) => {
+    return !input.validity.valid;
+  });
+};
+
+function toggleButtonState(options, inputList, buttonElement){
+  if (hasInvalidInput(inputList)){
+    buttonElement.classList.add(options.inactiveButtonClass);
+  } else {
+    buttonElement.classList.remove(options.inactiveButtonClass);
+  };
+};
+
+enableValidation(OPTIONS); 

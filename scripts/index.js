@@ -159,3 +159,8 @@ cardForm.addEventListener('submit', submitCard);
 initialCards.forEach((card) => {
   galleryCardList.append(createCardElement(card.name, card.link));
 })
+
+test()
+const test = function() {
+console.log('hello');
+}
