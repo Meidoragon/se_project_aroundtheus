@@ -1,8 +1,9 @@
 # Project 3: Around The U.S.
 
-### Overview  
+## Overview  
 
-* Intro  
+* Intro
+* Technologies Used
 * Figma  
 * Images
 * Link
@@ -10,7 +11,13 @@
 
 **Intro**
   
-This project is made so all the elements are displayed correctly on popular screen sizes. We recommend investing more time in completing this project, since it's more difficult than previous ones.  
+Around the US allows users to comfortably view, like, and add images, as well as change profile information, on any device they like, from desktop and laptop computers, down to tablets and mobile devices.
+
+**Technologies Used**
+* Media queries to fit all screen sizes
+* HTML Forms to allow for changing profile information or adding new images
+* Form validation to ensure all information added is applicable
+* Grid layout in order to adapt layout and to allow the number of images to scale properly
   
 **Figma**  
   
