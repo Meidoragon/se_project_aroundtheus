@@ -18,7 +18,7 @@ This project is made so all the elements are displayed correctly on popular scre
   
 **Images**  
   
-[Showcase of project features](https://github.com/Meidoragon/se_project_aroundtheus/blob/assets/around_US_showcase.gif?raw=true)
+[Showcase of project features](https://github.com/Meidoragon/se_project_aroundtheus/blob/assets/around_US_showcase.gif)
 
 **Link**
 * ![Link to the project on Github Pages](https://meidoragon.github.io/se_project_aroundtheus/)
