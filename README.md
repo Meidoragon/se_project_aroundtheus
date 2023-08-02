@@ -18,10 +18,10 @@ This project is made so all the elements are displayed correctly on popular scre
   
 **Images**  
   
-[Showcase of project features](../assets/around_US_showcase.gif?raw=true)
+![Showcase of project features](../assets/around_US_showcase.gif?raw=true)
 
 **Link**
-* ![Link to the project on Github Pages](https://meidoragon.github.cio/se_project_aroundtheus/)
+* [Link to the project on Github Pages](https://meidoragon.github.cio/se_project_aroundtheus/)
 
 **TODO** *currently it's more of a prediction of what's to come,but if it never comes to be then it's a proper TODO.*
 
