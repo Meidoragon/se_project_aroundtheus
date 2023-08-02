@@ -71,7 +71,7 @@ function displayImagePreview(title, image){
 
 function openPopup(popup){
   popup.classList.add('modal_opened');
-  popup.addEventListener("click", handleClick);
+  popup.addEventListener("mousedown", handleClick);
   DOM.addEventListener("keydown", handleKeypress);
 }
 
@@ -91,7 +91,7 @@ function handleKeypress(evt){
 
 function closePopup(popup){
   popup.classList.remove('modal_opened');
-  DOM.removeEventListener("click", handleClick);
+  DOM.removeEventListener("mousedown", handleClick);
   DOM.removeEventListener("keydown", handleKeypress);
 }
 
@@ -113,10 +113,13 @@ function submitProfile(evt){
 function submitCard(evt){
   evt.preventDefault();
   const newCard = createCardElement(evt.target.title.value, evt.target.url.value);
+  const inputList = [...evt.target.querySelectorAll(OPTIONS.inputSelector)];
+  const buttonElement = evt.target.querySelector(OPTIONS.submitButtonSelector);
   galleryCardList.prepend(newCard);
   evt.target.reset();
   closePopup(cardEditor);
-}
+  toggleButtonState(OPTIONS, inputList, buttonElement);
+};
 
 /**
  * Generates a card to add to the ul element in the gallery section
@@ -159,8 +162,3 @@ cardForm.addEventListener('submit', submitCard);
 initialCards.forEach((card) => {
   galleryCardList.append(createCardElement(card.name, card.link));
 })
-
-test()
-const test = function() {
-console.log('hello');
-}

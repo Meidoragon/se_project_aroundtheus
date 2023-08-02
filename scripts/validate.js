@@ -37,8 +37,9 @@ function checkInputValidity (options, formElement, inputElement) {
 };
 
 function setEventListeners(options, formElement) {
-  const inputList = Array.from(formElement.querySelectorAll(options.inputSelector));
+  const inputList = [...formElement.querySelectorAll(options.inputSelector)];
   const buttonElement = formElement.querySelector(options.submitButtonSelector);
+  toggleButtonState(options, inputList, buttonElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       toggleButtonState(options, inputList, buttonElement);
@@ -62,8 +63,10 @@ function hasInvalidInput(inputList){
 
 function toggleButtonState(options, inputList, buttonElement){
   if (hasInvalidInput(inputList)){
+    buttonElement.disabled = true;
     buttonElement.classList.add(options.inactiveButtonClass);
   } else {
+    buttonElement.disabled = false;
     buttonElement.classList.remove(options.inactiveButtonClass);
   };
 };
