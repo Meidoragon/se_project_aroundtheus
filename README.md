@@ -31,7 +31,6 @@ Around the US allows users to comfortably view, like, and add images, as well as
 * [Link to the project on Github Pages](https://meidoragon.github.cio/se_project_aroundtheus/)
 
 **TODO** 
-*or at least a prediction of what's to come*
 
 * Using the spacing values from the brief, determine if any of them can be represented by a simple calc(Xvw - Ypx) to allow meeting the design requirements for some of them without using media queries. Not because it should be done, but because I want to know. Main example that interested me was the copywrite text in the footer. 
 * Pull the initialCards const out of index.js and have it be its own file that gets imported. Probably set it up as JSON or something. Would need to include some variety of sorting so that the elements get created in the correct order. But this would allow it to scale for more cards in the gallery.
