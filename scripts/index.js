@@ -1,29 +1,4 @@
-const initialCards = [
-  {
-    name: 'Yosemite Valley',
-    link: 'https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg'
-  },
-  {
-    name: 'Lake Louise',
-    link: 'https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg'
-  },
-  {
-    name: 'Bald Mountains',
-    link: 'https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg'
-  },
-  {
-    name: 'Latemar',
-    link: 'https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg'
-  },
-  {
-    name: 'Vanoise National Park',
-    link: 'https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg'
-  },
-  {
-    name: 'Lago di Braies',
-    link: 'https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg'
-  },
-]
+
 
 //Declarations
 const DOM = document;
@@ -53,9 +28,6 @@ const previewTitle = imagePreview.querySelector('.modal__image-title');
 const previewCancelButton = imagePreview.querySelector('.modal__cancel-button');
 
 //Functions
-/**
- * Toggles the display state of the profile editor window
- */
 function openProfileEditor(){
   editorName.value = profileName.textContent;
   editorDescription.value = profileDescription.textContent;
@@ -95,10 +67,6 @@ function closePopup(popup){
   DOM.removeEventListener("keydown", handleKeypress);
 }
 
-/**
- * Submits changes made in profile editor and closes the window
- * @param {event} evt Event that triggered this function
- */
 function submitProfile(evt){
   evt.preventDefault();
   profileName.textContent = editorName.value;
@@ -106,10 +74,6 @@ function submitProfile(evt){
   closePopup(profileEditor);
 }
 
-/**
- * Submits information entered in card creation form and closes the window
- * @param {event} evt Event that triggered this function
- */
 function submitCard(evt){
   evt.preventDefault();
   const newCard = createCardElement(evt.target.title.value, evt.target.url.value);
@@ -121,32 +85,26 @@ function submitCard(evt){
   toggleButtonState(OPTIONS, inputList, buttonElement);
 };
 
-/**
- * Generates a card to add to the ul element in the gallery section
- * @param {string} name string of the information to add to the title of the card
- * @param {string} link string of the url for the image to add to the card 
- * @returns object representing html element to be added to card section
- */
 function createCardElement(name, link){
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImage = cardElement.querySelector('.card__image');
-  const cardTitle = cardElement.querySelector('.card__title');
-  const likeButton = cardElement.querySelector('.card__button_type_like-inactive');
-  const deleteButton = cardElement.querySelector('.card__button_type_delete');
-  const handleLikeClick = (evt) => {
-    evt.target.classList.toggle('card__button_type_like-active');
-  }
-  const handleDeleteClick = () => {
-    cardElement.remove()
-  }
+  // const cardElement = cardTemplate.cloneNode(true);
+  // const cardImage = cardElement.querySelector('.card__image');
+  // const cardTitle = cardElement.querySelector('.card__title');
+  // const likeButton = cardElement.querySelector('.card__button_type_like-inactive');
+  // const deleteButton = cardElement.querySelector('.card__button_type_delete');
+  // const handleLikeClick = (evt) => {
+  //   evt.target.classList.toggle('card__button_type_like-active');
+  // }
+  // const handleDeleteClick = () => {
+  //   cardElement.remove()
+  // }
   const handleImageClick = () => {
     displayImagePreview(name, link)
   }
-  cardImage.src = link;
-  cardImage.alt = name;
-  cardTitle.textContent = name;
-  likeButton.addEventListener('click', handleLikeClick);
-  deleteButton.addEventListener('click', handleDeleteClick);
+  // cardImage.src = link;
+  // cardImage.alt = name;
+  // cardTitle.textContent = name;
+  // likeButton.addEventListener('click', handleLikeClick);
+  // deleteButton.addEventListener('click', handleDeleteClick);
   cardImage.addEventListener('click', handleImageClick);
   return cardElement;
 }

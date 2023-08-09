@@ -18,6 +18,7 @@ Around the US allows users to comfortably view, like, and add images, as well as
 * HTML Forms to allow for changing profile information or adding new images
 * Form validation to ensure all information added is applicable
 * Grid layout in order to adapt layout and to allow the number of images to scale properly
+* OOP to organize the script logic
   
 **Figma**  
   
