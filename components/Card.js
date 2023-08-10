@@ -68,14 +68,6 @@ export default class Card{
     })
   }
 
-  #displayImagePreview(title, image){
-
-    previewImage.src = image;
-    previewImage.alt = title;
-    previewTitle.textContent = title;
-    openPopup(imagePreview);
-  }
-
   createCard(){
     /**
      * create card
