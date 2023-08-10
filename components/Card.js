@@ -1,9 +1,3 @@
-/**
- *  TODO: continue refactor. #displayImagePreview and its related logic needs to be set up. Figure out which
- *    parts should be in the class, and which need to be in utils.js
- */
-/*********************************************************************************************************/
-
 import { openPopup } from '../utils/utils.js';
 
 /**
@@ -17,18 +11,16 @@ export default class Card{
   #likeButton;
   #deleteButton;
   #cardImage;
-  #imagePreview;
 
   /**
-   * 
-   * @param {Object} data two element object containing the .text and image .link with which to make the card
-   * @param {Element} template the template element that gets used to build the card element
+   * Code for creating new cards from a template and an object containing the text and image url
+   * @param {Object} data {link, name} two element object containing the .text and image .link with which to make the card
+   * @param {Element} cardSelector the template element that gets used to build the card element
    */
   constructor({link, name}, cardSelector){
     this.#name = name;
     this.#link = link;
     this.#cardSelector = cardSelector;
-
   }
 
   #handleLikeClick () {
@@ -40,8 +32,6 @@ export default class Card{
   }
 
   #handleImageClick () {
-    //TODO: these three are getting called every time an image gets clicked. 
-    //consider sending these to constants or something
     const imagePreview = document.querySelector('.preview-modal');
     const previewImage = imagePreview.querySelector('.modal__image');
     const previewTitle = imagePreview.querySelector('.modal__image-title');
@@ -68,12 +58,11 @@ export default class Card{
     })
   }
 
+  /**
+   * Creates and returns the entire card element, ready to be displayed.
+   * @returns the card element to be added to the card grid
+   */
   createCard(){
-    /**
-     * create card
-     * add listeners
-     * return the card
-     */
     this.#cardElement = document
       .querySelector(this.#cardSelector)
       .content.querySelector('.card')

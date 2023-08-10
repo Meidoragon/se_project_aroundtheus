@@ -31,11 +31,10 @@ export const FIELD_ELEMENTS = {
   cardURL: FORM_ELEMENTS.addCardForm.elements.url
 }
 
-
 export const OTHER_ELEMENTS = {
   galleryCardList: DOM.querySelector('.gallery__cards'),
   profileName: DOM.querySelector('.profile__name'),
-  profileDescription: DOM.querySelector('.profile__description')
+  profileDescription: DOM.querySelector('.profile__description'),
 }
 
 export const INITIAL_CARDS = [
@@ -64,28 +63,3 @@ export const INITIAL_CARDS = [
     link: 'https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg'
   },
 ];
-
-
-//const galleryCardList = document.querySelector('.gallery__cards');
-
-
-
-// const cardEditor = DOM.querySelector(opts.cardEditorSelector);
-
-// const profileName = DOM.querySelector('.profile__name');
-// const profileDescription = DOM.querySelector('.profile__description');
-// const galleryCardList = DOM.querySelector('.gallery__cards');
-// const cardTemplate = DOM.querySelector("#card_template").content.querySelector('.card');
-// const cancelButtons = DOM.querySelectorAll('.modal__cancel-button');
-
-// const profileEditor = DOM.querySelector('.profile-modal');
-// const profileForm = DOM.forms['profile-form'];
-// const editorName = profileForm.elements.name;
-// const editorDescription = profileForm.elements.description;
-// const editorCancelButton = profileForm.elements.profile_cancel_button;
-
-// const cardEditor = DOM.querySelector('.card-modal');
-// const cardForm = DOM.forms['card-form'];
-// const cardName = cardForm.elements.name;
-// const cardImageURL = cardForm.elements.url;
-// const cardCancelButton = cardForm.elements.card_cancel_button;

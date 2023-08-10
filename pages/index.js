@@ -1,50 +1,54 @@
 import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
 import { openPopup, closePopup } from '../utils/utils.js';
-import { BUTTON_ELEMENTS as buttons, 
+import { DOM,
+        VALIDATOR_OPTIONS,
+        BUTTON_ELEMENTS as buttons, 
         FORM_ELEMENTS as forms, 
-        MODAL_ELEMENTS as modals,
-        OTHER_ELEMENTS as elements,
+        MODAL_ELEMENTS as mods,
+        OTHER_ELEMENTS as elems,
         FIELD_ELEMENTS as fields,
         INITIAL_CARDS as cards } from '../utils/constants.js';
 
-
+//Card Generation
 function hatchCards (cardData) {
-  elements.galleryCardList.append(new Card(cardData, '#card_template').createCard());
+  elems.galleryCardList.append(new Card(cardData, '#card_template').createCard());
 }
-
 cards.forEach((cardData) => {
   hatchCards(cardData);
 })
 
+//Form Validation
+Array.from(DOM.querySelectorAll(VALIDATOR_OPTIONS.formSelector)).forEach((formElement) => {
+  //attach the validator directly to the form fieldset
+  formElement.formValidator = new FormValidator(VALIDATOR_OPTIONS, formElement);
+  formElement.formValidator.enableValidation();
+});
+
+//Modal overlay management
 function openProfileEditor(){
-  fields.editorName.value = elements.profileName.textContent;
-  fields.editorDescription.value = elements.profileDescription.textContent;
-  openPopup(modals.profileEditor);
+  fields.editorName.value = elems.profileName.textContent;
+  fields.editorDescription.value = elems.profileDescription.textContent;
+  openPopup(mods.profileEditor);
 }
 
 function submitProfile(evt){
   evt.preventDefault();
-  elements.profileName.textContent = fields.editorName.value;
-  elements.profileDescription.textContent = fields.editorDescription.value;
-  closePopup(modals.profileEditor);
+  elems.profileName.textContent = fields.editorName.value;
+  elems.profileDescription.textContent = fields.editorDescription.value;
+  closePopup(mods.profileEditor);
 }
 
 function submitCard(evt){
-  //TODO: Define: the things that aren't defined
-  //TODO: rewrite to utilize Card.js
-  //TODO: this also uses things in VALIDATOR_OPTIONS. Resolve this.
-  //wow this one is actually kind of a real piece of work
   evt.preventDefault();
-  const newCard = new Card(evt.target.title.value, evt.target.url.value);
-  const inputList = [...evt.target.querySelectorAll(OPTIONS.inputSelector)];
-  const buttonElement = evt.target.querySelector(OPTIONS.submitButtonSelector);
-  galleryCardList.prepend(newCard);
+  hatchCards({link: evt.target.url.value, name: evt.target.title.value});
+  closePopup(mods.cardEditor);
   evt.target.reset();
-  closePopup(cardEditor);
-  toggleButtonState(OPTIONS, inputList, buttonElement);
+  evt.target.querySelector(".modal__form").formValidator.toggleButtonState();
 }
 
+//event listeners. 
 buttons.profileEditButton.addEventListener('click', openProfileEditor);
-buttons.addCardButton.addEventListener('click', () => openPopup(modals.cardEditor));
+buttons.addCardButton.addEventListener('click', () => openPopup(mods.cardEditor));
 forms.profileForm.addEventListener('submit', submitProfile);
 forms.addCardForm.addEventListener('submit', submitCard);
