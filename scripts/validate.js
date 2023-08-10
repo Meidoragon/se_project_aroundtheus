@@ -49,7 +49,7 @@ function setEventListeners(options, formElement) {
 };
 
 function enableValidation (options) {
-  const formList = Array.from(DOM.querySelectorAll(options.formSelector));
+  const formList = [...DOM.querySelectorAll(options.formSelector)];
   formList.forEach((formElement) => {
     setEventListeners(options, formElement);
   })
@@ -71,4 +71,4 @@ function toggleButtonState(options, inputList, buttonElement){
   };
 };
 
-enableValidation(OPTIONS); 
+enableValidation(OPTIONS);
