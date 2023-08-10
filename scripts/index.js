@@ -22,10 +22,10 @@ const cardName = cardForm.elements.name;
 const cardImageURL = cardForm.elements.url;
 const cardCancelButton = cardForm.elements.card_cancel_button;
 
-const imagePreview = DOM.querySelector('.preview-modal');
-const previewImage = imagePreview.querySelector('.modal__image');
-const previewTitle = imagePreview.querySelector('.modal__image-title');
-const previewCancelButton = imagePreview.querySelector('.modal__cancel-button');
+// const imagePreview = DOM.querySelector('.preview-modal');
+// const previewImage = imagePreview.querySelector('.modal__image');
+// const previewTitle = imagePreview.querySelector('.modal__image-title');
+// const previewCancelButton = imagePreview.querySelector('.modal__cancel-button');
 
 //Functions
 function openProfileEditor(){
@@ -34,38 +34,38 @@ function openProfileEditor(){
   openPopup(profileEditor);
 }
 
-function displayImagePreview(title, image){
-  previewImage.src = image;
-  previewImage.alt = title;
-  previewTitle.textContent = title;
-  openPopup(imagePreview);
-}
+// function displayImagePreview(title, image){
+//   previewImage.src = image;
+//   previewImage.alt = title;
+//   previewTitle.textContent = title;
+//   openPopup(imagePreview);
+// }
 
-function openPopup(popup){
-  popup.classList.add('modal_opened');
-  popup.addEventListener("mousedown", handleClick);
-  DOM.addEventListener("keydown", handleKeypress);
-}
+// function openPopup(popup){
+//   popup.classList.add('modal_opened');
+//   popup.addEventListener("mousedown", handleClick);
+//   DOM.addEventListener("keydown", handleKeypress);
+// }
 
-function handleClick(evt) {
-  const clickedElement = evt.target;
-  if ((clickedElement.classList.contains('modal')) || clickedElement.classList.contains('modal__cancel-button')){
-    closePopup(clickedElement.closest('.modal'))
-  }
-}
+// function handleClick(evt) {
+//   const clickedElement = evt.target;
+//   if ((clickedElement.classList.contains('modal')) || clickedElement.classList.contains('modal__cancel-button')){
+//     closePopup(clickedElement.closest('.modal'))
+//   }
+// }
 
-function handleKeypress(evt){
-  if (evt.key === 'Escape'){
-    const currentPopup = DOM.querySelector('.modal_opened');
-    closePopup(currentPopup);
-  }
-}
+// function handleKeypress(evt){
+//   if (evt.key === 'Escape'){
+//     const currentPopup = DOM.querySelector('.modal_opened');
+//     closePopup(currentPopup);
+//   }
+// }
 
-function closePopup(popup){
-  popup.classList.remove('modal_opened');
-  DOM.removeEventListener("mousedown", handleClick);
-  DOM.removeEventListener("keydown", handleKeypress);
-}
+// function closePopup(popup){
+//   popup.classList.remove('modal_opened');
+//   DOM.removeEventListener("mousedown", handleClick);
+//   DOM.removeEventListener("keydown", handleKeypress);
+// }
 
 function submitProfile(evt){
   evt.preventDefault();
@@ -97,16 +97,16 @@ function createCardElement(name, link){
   // const handleDeleteClick = () => {
   //   cardElement.remove()
   // }
-  const handleImageClick = () => {
-    displayImagePreview(name, link)
-  }
+  // const handleImageClick = () => {
+  //   displayImagePreview(name, link)
+  // }
   // cardImage.src = link;
   // cardImage.alt = name;
   // cardTitle.textContent = name;
   // likeButton.addEventListener('click', handleLikeClick);
   // deleteButton.addEventListener('click', handleDeleteClick);
-  cardImage.addEventListener('click', handleImageClick);
-  return cardElement;
+  // cardImage.addEventListener('click', handleImageClick);
+  // return cardElement;
 }
 
 //Event Listeners
