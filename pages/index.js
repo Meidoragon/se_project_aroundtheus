@@ -12,17 +12,18 @@ import { DOM,
 
 //Card Generation
 function hatchCards (cardData) {
-  elems.galleryCardList.append(new Card(cardData, '#card_template').createCard());
+  return new Card(cardData, '#card_template').createCard();
 }
 cards.forEach((cardData) => {
-  hatchCards(cardData);
+  elems.galleryCardList.append(hatchCards(cardData));
 })
 
 //Form Validation
+const validators = {};
 Array.from(DOM.querySelectorAll(VALIDATOR_OPTIONS.formSelector)).forEach((formElement) => {
-  //attach the validator directly to the form fieldset
-  formElement.formValidator = new FormValidator(VALIDATOR_OPTIONS, formElement);
-  formElement.formValidator.enableValidation();
+  //become able to refer to a specific validator via parent element ID.
+  validators[formElement.parentElement.id] = new FormValidator(VALIDATOR_OPTIONS, formElement);
+  validators[formElement.parentElement.id].enableValidation();
 });
 
 //Modal overlay management
@@ -41,10 +42,10 @@ function submitProfile(evt){
 
 function submitCard(evt){
   evt.preventDefault();
-  hatchCards({link: evt.target.url.value, name: evt.target.title.value});
+  elems.galleryCardList.prepend(hatchCards({link: evt.target.url.value, name: evt.target.title.value}));
   closePopup(mods.cardEditor);
   evt.target.reset();
-  evt.target.querySelector(".modal__form").formValidator.toggleButtonState();
+  validators[evt.target.id].toggleButtonState();
 }
 
 //event listeners. 

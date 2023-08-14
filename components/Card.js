@@ -23,15 +23,16 @@ export default class Card{
     this.#cardSelector = cardSelector;
   }
 
-  #handleLikeClick () {
+  #handleLikeClick = () => {
     this.#likeButton.classList.toggle('card__button_type_like-active');
   }
 
-  #handleDeleteClick () {
+  #handleDeleteClick = () => {
     this.#cardElement.remove();
+    this.#cardElement = null;
   }
 
-  #handleImageClick () {
+  #handleImageClick = () => {
     const imagePreview = document.querySelector('.preview-modal');
     const previewImage = imagePreview.querySelector('.modal__image');
     const previewTitle = imagePreview.querySelector('.modal__image-title');
@@ -42,7 +43,7 @@ export default class Card{
     openPopup(imagePreview);
   }
 
-  #setEventListeners(){
+  #setEventListeners = () => {
     this.#likeButton = this.#cardElement.querySelector('.card__button_type_like-inactive');
     this.#deleteButton = this.#cardElement.querySelector('.card__button_type_delete');
     this.#cardImage = this.#cardElement.querySelector('.card__image');
@@ -62,7 +63,7 @@ export default class Card{
    * Creates and returns the entire card element, ready to be displayed.
    * @returns the card element to be added to the card grid
    */
-  createCard(){
+  createCard = () => {
     this.#cardElement = document
       .querySelector(this.#cardSelector)
       .content.querySelector('.card')
