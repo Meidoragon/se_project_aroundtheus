@@ -7,9 +7,11 @@ export default class UserInfo{
   #name;
   #description;
 
-  constructor(nameSelector, descriptionSelector){
-    this.#nameElement = document.querySelector(nameSelector);
-    this.#descriptionElement = document.querySelector(descriptionSelector);
+  constructor(name, description){
+    // console.log(name);
+    // console.log(description);
+    this.#nameElement = name;
+    this.#descriptionElement = description;
     this.#name = this.#nameElement.textContent;
     this.#description = this.#descriptionElement.textContent
   }
@@ -18,7 +20,7 @@ export default class UserInfo{
     return {name: this.#name, description: this.#description};
   }
 
-  setUserInfo(userName, userDescription){
+  setUserInfo([ userName, userDescription ]){
     this.#name = userName;
     this.#description = userDescription;
     this.#nameElement.textContent = this.#name;
