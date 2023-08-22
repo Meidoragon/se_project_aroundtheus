@@ -14,13 +14,13 @@ export default class Popup {
     return this.#popupElement;
   }
 
-  #handleEscClose = (evt) => {
+  handleEscClose = (evt) => {
     if (evt.key === 'Escape'){
       this.close();      
     }
   }
 
-  #handleClick = (evt) => {
+  handleClick = (evt) => {
     const clickedElement = evt.target;
     if ((clickedElement.classList.contains('modal')) || 
          clickedElement.classList.contains('modal__cancel-button')){
@@ -28,19 +28,19 @@ export default class Popup {
     }
   }
 
-  open = () => {
+  open(){
     this.#popupElement.classList.add('modal_opened');
     this.setEventListeners();
   }
 
   close = () => {
     this.#popupElement.classList.remove('modal_opened');
-    this.#popupElement.removeEventListener("mousedown", this.#handleClick);
-    DOM.removeEventListener("keydown", this.#handleEscClose);
+    this.#popupElement.removeEventListener("mousedown", this.handleClick);
+    DOM.removeEventListener("keydown", this.handleEscClose);
   }
 
   setEventListeners() {
-    this.#popupElement.addEventListener("mousedown", this.#handleClick);
-    DOM.addEventListener("keydown", this.#handleEscClose);
+    this.#popupElement.addEventListener("mousedown", this.handleClick);
+    DOM.addEventListener("keydown", this.handleEscClose);
   }
 }

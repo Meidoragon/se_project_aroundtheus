@@ -1,29 +1,23 @@
 import Card from "../components/Card.js";
+import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
-import { openPopup, closePopup } from '../utils/utils.js';
-import { DOM,
-        BUTTON_ELEMENTS as buttons, 
+import {BUTTON_ELEMENTS as buttons, 
         FORM_ELEMENTS as forms, 
-        MODAL_SELECTORS as mods,
+        SELECTORS as selectors,
         OTHER_ELEMENTS as elems,
         FIELD_ELEMENTS as fields,
         INITIAL_CARDS as cards } from '../utils/constants.js';
 
-const profileFormPopup = new PopupWithForm(mods.profileEditor, submitProfile);
+const profileFormPopup = new PopupWithForm(selectors.profileEditor, submitProfile);
 profileFormPopup.setEventListeners();
-const cardFormPopup = new PopupWithForm(mods.cardEditor, submitCard)
+const cardFormPopup = new PopupWithForm(selectors.cardEditor, submitCard)
 cardFormPopup.setEventListeners();
 const user = new UserInfo(elems.profileName, elems.profileDescription);
-
-
-//Card Generation
-function hatchCards (cardData) {
-  return new Card(cardData, '#card_template').createCard();
-}
-cards.forEach((cardData) => {
-  elems.galleryCardList.append(hatchCards(cardData));
-})
+const gallery = new Section({items: cards, renderer: renderCard}, elems.galleryCardList)
+gallery.renderItems();
+const imagePopup = new PopupWithImage(selectors.previewModal);
 
 function submitProfile (evt) {
   evt.preventDefault();
@@ -31,53 +25,28 @@ function submitProfile (evt) {
   this.close();
 }
 
-//TODO: this
 function submitCard(evt) {
   evt.preventDefault();
+  const formInfo = cardFormPopup.getInputValues();
+  const item = {name: formInfo[0], link: formInfo[1]};
+  const newCard = new Card(item, selectors.cardTemplate);
+  gallery.addItem(newCard.createCard());
   this.close();
   this.resetForm();
 }
 
-
-//Form Validation
-// const validators = {};
-// Array.from(DOM.querySelectorAll(VALIDATOR_OPTIONS.formSelector)).forEach((formElement) => {
-//   //become able to refer to a specific validator via parent element ID.
-//   validators[formElement.parentElement.id] = new FormValidator(VALIDATOR_OPTIONS, formElement);
-//   validators[formElement.parentElement.id].enableValidation();
-// });
-
-//Modal overlay management
-// function openProfileEditor(){
-//   fields.editorName.value = elems.profileName.textContent;
-//   fields.editorDescription.value = elems.profileDescription.textContent;
-//   openPopup(mods.profileEditor);
-// }
-
-// function submitProfile(evt){
-//   evt.preventDefault();
-//   elems.profileName.textContent = fields.editorName.value;
-//   elems.profileDescription.textContent = fields.editorDescription.value;
-//   closePopup(mods.profileEditor);
-// }
-
-// function submitCard(evt){
-//   evt.preventDefault();
-//   elems.galleryCardList.prepend(hatchCards({link: evt.target.url.value, name: evt.target.title.value}));
-//   closePopup(mods.cardEditor);
-//   evt.target.reset();
-//   validators[evt.target.id].toggleButtonState();
-// }
+function renderCard(item) {
+  const card = new Card(item, selectors.cardTemplate);
+  this.setItem(card.createCard());
+}
 
 //event listeners. 
 buttons.profileEditButton.addEventListener('click', () => {
   const info = user.getUserInfo();
   fields.editorName.value = info.name;
   fields.editorDescription.value = info.description;
-  profileFormPopup.open();
+  profileFormPopup.open(user.getUserInfo());
 });
 buttons.addCardButton.addEventListener('click', () => {
   cardFormPopup.open();
 });
-// forms.profileForm.addEventListener('submit', );
-// forms.addCardForm.addEventListener('submit', submitCard);

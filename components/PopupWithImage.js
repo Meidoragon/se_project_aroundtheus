@@ -1,3 +1,4 @@
+import { DOM } from '../utils/constants.js';
 /**
  * Create the PopupWithImage class as a child class of Popup. 
  * This class has to change the parent open() method. 
@@ -9,12 +10,23 @@
 import Popup from './Popup.js';
 
 export default class PopupWithImage extends Popup{
-  constructor(popupSelector) {
+  #imageUrl
+  constructor(imageUrl, popupSelector) {
     super(popupSelector);
+    this.#imageUrl = imageUrl;
   }
 
   open(){
-    super.open()
+    super.open();
     //add functionality necessary for image popups
+  }
+
+  close(){
+    super.close();
+  }
+
+  setEventListeners(){
+    super.getPopupElement.addEventListener("mousedown", this.handleClick);
+    DOM.addEventListener("keydown", super.handleEscClose);
   }
 }

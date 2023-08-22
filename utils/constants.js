@@ -14,9 +14,11 @@ export const FORM_ELEMENTS = {
   addCardForm: DOM.forms['card-form']
 }
 
-export const MODAL_SELECTORS = {
+export const SELECTORS = {
   cardEditor: '.card-modal',
-  profileEditor: '.profile-modal'
+  profileEditor: '.profile-modal',
+  imageModal: '.preview-modal',
+  cardTemplate: '#card_template'
 }
 
 export const BUTTON_ELEMENTS = {

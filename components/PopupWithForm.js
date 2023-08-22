@@ -17,8 +17,8 @@ export default class PopupWithForm extends Popup{
     this.#validator.enableValidation();
   }
 
-  open(){
-    super.open();
+  open = () => {
+    super.open(); 
     this.#validator.toggleButtonState();
   }
 

@@ -7,14 +7,22 @@ export default class Section {
   #renderer
   #container
   
-  constructor({items, renderer}, selector) {
+  constructor({items, renderer}, element) {
     this.#renderedItems = items;
-    this.#renderer = renderer;
-    this.#container = document.querySelector(selector);
+    this.#renderer = renderer.bind(this);
+    this.#container = element;
   }
 
-  setItem(element) {
-    this.#container.append(element);
+  setItem(element, append = true) {
+    if (append){
+      this.#container.append(element);
+    } else {
+      this.#container.prepend(element);
+    }
+  }
+
+  addItem(element) {
+    this.setItem(element, false);
   }
 
   clear() {
@@ -22,7 +30,6 @@ export default class Section {
   }
 
   renderItems(){
-    this.#clear();
     this.#renderedItems.forEach(item => {
       this.#renderer(item);
     });
