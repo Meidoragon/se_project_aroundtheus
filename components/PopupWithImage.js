@@ -10,23 +10,19 @@ import { DOM } from '../utils/constants.js';
 import Popup from './Popup.js';
 
 export default class PopupWithImage extends Popup{
-  #imageUrl
-  constructor(imageUrl, popupSelector) {
+  #popupImage
+  #popupTitle
+
+  constructor(popupSelector) {
     super(popupSelector);
-    this.#imageUrl = imageUrl;
+    this.#popupImage = this.getPopupElement().querySelector('.modal__image');
+    this.#popupTitle = this.getPopupElement().querySelector('.modal__image-title');
   }
 
-  open(){
+  open({link, name}){
+    this.#popupImage.src = link;
+    this.#popupImage.alt = name;
+    this.#popupTitle.textContent = name;
     super.open();
-    //add functionality necessary for image popups
-  }
-
-  close(){
-    super.close();
-  }
-
-  setEventListeners(){
-    super.getPopupElement.addEventListener("mousedown", this.handleClick);
-    DOM.addEventListener("keydown", super.handleEscClose);
   }
 }

@@ -10,14 +10,19 @@ import {BUTTON_ELEMENTS as buttons,
         FIELD_ELEMENTS as fields,
         INITIAL_CARDS as cards } from '../utils/constants.js';
 
+
+const test = new PopupWithForm('.modal__image', () => {});
+test.hand
+
+const imagePopup = new PopupWithImage(selectors.imageModal);
 const profileFormPopup = new PopupWithForm(selectors.profileEditor, submitProfile);
 profileFormPopup.setEventListeners();
 const cardFormPopup = new PopupWithForm(selectors.cardEditor, submitCard)
 cardFormPopup.setEventListeners();
-const user = new UserInfo(elems.profileName, elems.profileDescription);
 const gallery = new Section({items: cards, renderer: renderCard}, elems.galleryCardList)
 gallery.renderItems();
-const imagePopup = new PopupWithImage(selectors.previewModal);
+const user = new UserInfo(elems.profileName, elems.profileDescription);
+
 
 function submitProfile (evt) {
   evt.preventDefault();
@@ -29,14 +34,18 @@ function submitCard(evt) {
   evt.preventDefault();
   const formInfo = cardFormPopup.getInputValues();
   const item = {name: formInfo[0], link: formInfo[1]};
-  const newCard = new Card(item, selectors.cardTemplate);
+  const newCard = new Card(item, handleCardClick, selectors.cardTemplate);
   gallery.addItem(newCard.createCard());
   this.close();
   this.resetForm();
 }
 
+function handleCardClick(){
+  imagePopup.open(this.getCardInfo());
+}
+
 function renderCard(item) {
-  const card = new Card(item, selectors.cardTemplate);
+  const card = new Card(item, handleCardClick, selectors.cardTemplate);
   this.setItem(card.createCard());
 }
 

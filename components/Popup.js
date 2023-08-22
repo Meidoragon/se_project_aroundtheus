@@ -10,11 +10,15 @@ export default class Popup {
     this.#popupElement = document.querySelector(popupSelector);
   }
 
+  /**
+   * obtain element object for the element this object represents
+   * @returns element object
+   */
   getPopupElement = () => {
     return this.#popupElement;
   }
 
-  handleEscClose = (evt) => {
+  #handleEscClose = (evt) => {
     if (evt.key === 'Escape'){
       this.close();      
     }
@@ -41,6 +45,6 @@ export default class Popup {
 
   setEventListeners() {
     this.#popupElement.addEventListener("mousedown", this.handleClick);
-    DOM.addEventListener("keydown", this.handleEscClose);
+    DOM.addEventListener("keydown", this.#handleEscClose);
   }
 }

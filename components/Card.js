@@ -6,20 +6,24 @@ import { openPopup } from '../utils/utils.js';
 export default class Card{
   #name;
   #link;
+  #cardInfo
   #cardSelector;
   #cardElement;
   #likeButton;
   #deleteButton;
   #cardImage;
+  #handleImageClick
 
   /**
    * Code for creating new cards from a template and an object containing the text and image url
    * @param {Object} data {link, name} two element object containing the .text and image .link with which to make the card
    * @param {Element} cardSelector the template element that gets used to build the card element
    */
-  constructor({link, name}, cardSelector){
+  constructor({link, name}, clickHandler, cardSelector){
     this.#name = name;
     this.#link = link;
+    this.#cardInfo = {name: this.#name, link: this.#link};
+    this.#handleImageClick = clickHandler.bind(this);
     this.#cardSelector = cardSelector;
   }
 
@@ -30,17 +34,6 @@ export default class Card{
   #handleDeleteClick = () => {
     this.#cardElement.remove();
     this.#cardElement = null;
-  }
-
-  #handleImageClick = () => {
-    const imagePreview = document.querySelector('.preview-modal');
-    const previewImage = imagePreview.querySelector('.modal__image');
-    const previewTitle = imagePreview.querySelector('.modal__image-title');
-
-    previewImage.src = this.#link;
-    previewImage.alt = this.#name;
-    previewTitle.textContent = this.#name;
-    openPopup(imagePreview);
   }
 
   #setEventListeners = () => {
@@ -57,6 +50,15 @@ export default class Card{
     this.#cardImage.addEventListener('mousedown', () => {
       this.#handleImageClick();
     })
+  }
+
+
+  /**
+   * obtain object with card info
+   * @returns object with the name of and url to the relevant image
+   */
+  getCardInfo(){
+    return this.#cardInfo;
   }
 
   /**
