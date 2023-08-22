@@ -1,3 +1,10 @@
+/*
+TODO:
+  Class Constructors that receive HTML elements:
+    either find the element outside of the class and send that, 
+    or send the selector and find it in the class.
+    Pick one.
+*/
 import Card from "../components/Card.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
@@ -10,16 +17,12 @@ import {BUTTON_ELEMENTS as buttons,
         FIELD_ELEMENTS as fields,
         INITIAL_CARDS as cards } from '../utils/constants.js';
 
-
-const test = new PopupWithForm('.modal__image', () => {});
-test.hand
-
 const imagePopup = new PopupWithImage(selectors.imageModal);
 const profileFormPopup = new PopupWithForm(selectors.profileEditor, submitProfile);
 profileFormPopup.setEventListeners();
 const cardFormPopup = new PopupWithForm(selectors.cardEditor, submitCard)
 cardFormPopup.setEventListeners();
-const gallery = new Section({items: cards, renderer: renderCard}, elems.galleryCardList)
+const gallery = new Section(cards, renderCard, elems.galleryCardList)
 gallery.renderItems();
 const user = new UserInfo(elems.profileName, elems.profileDescription);
 
@@ -35,7 +38,7 @@ function submitCard(evt) {
   const formInfo = cardFormPopup.getInputValues();
   const item = {name: formInfo[0], link: formInfo[1]};
   const newCard = new Card(item, handleCardClick, selectors.cardTemplate);
-  gallery.addItem(newCard.createCard());
+  gallery.addItem(newCard.createCard(), false);
   this.close();
   this.resetForm();
 }
@@ -46,7 +49,7 @@ function handleCardClick(){
 
 function renderCard(item) {
   const card = new Card(item, handleCardClick, selectors.cardTemplate);
-  this.setItem(card.createCard());
+  this.addItem(card.createCard());
 }
 
 //event listeners. 

@@ -7,13 +7,24 @@ export default class Section {
   #renderer
   #container
   
-  constructor({items, renderer}, element) {
+  /**
+   * manage group of items to be rendered on page after initial load
+   * @param {array} items Array of objects containing items to render
+   * @param {function} renderer renderer function
+   * @param {element} element element to which the items are added
+   */
+  constructor(items, renderer, element) {
     this.#renderedItems = items;
     this.#renderer = renderer.bind(this);
     this.#container = element;
   }
 
-  setItem(element, append = true) {
+  /**
+   * add new item to section
+   * @param {element} element element to add to list
+   * @param {boolean} append whether the item needs to be added to the beginning or end of the list
+   */
+  addItem(element, append = true) {
     if (append){
       this.#container.append(element);
     } else {
@@ -21,14 +32,9 @@ export default class Section {
     }
   }
 
-  addItem(element) {
-    this.setItem(element, false);
-  }
-
-  clear() {
-    this.#container.innerHTML = '';
-  }
-
+  /**
+   * render initial list of items
+   */
   renderItems(){
     this.#renderedItems.forEach(item => {
       this.#renderer(item);

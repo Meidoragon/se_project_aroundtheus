@@ -1,8 +1,3 @@
-import { openPopup } from '../utils/utils.js';
-
-/**
- * Code for creating new cards from a template and an object containing the text and image url
- */
 export default class Card{
   #name;
   #link;
@@ -51,7 +46,6 @@ export default class Card{
       this.#handleImageClick();
     })
   }
-
 
   /**
    * obtain object with card info

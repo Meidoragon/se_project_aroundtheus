@@ -70,7 +70,7 @@ export default class FormValidator{
   };
 
   /**
-   * Enable validation of the attached fieldset object
+   * Enable validation of the fieldset object
    */
   enableValidation() {
     this.#formInputList = [...this.#formElement.querySelectorAll(this.#inputSelector)];

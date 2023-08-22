@@ -7,19 +7,28 @@ export default class UserInfo{
   #name;
   #description;
 
+  /**
+   * Manage getting and setting information in profile section of page
+   * @param {element} name element for name
+   * @param {element} description element for description
+   */
   constructor(name, description){
-    // console.log(name);
-    // console.log(description);
     this.#nameElement = name;
     this.#descriptionElement = description;
     this.#name = this.#nameElement.textContent;
     this.#description = this.#descriptionElement.textContent
   }
 
+  /**
+   * @returns object containing user info
+   */
   getUserInfo(){
     return {name: this.#name, description: this.#description};
   }
 
+  /**
+   * @param {array} param0 array containing user info [0] = name, [1] = description
+   */
   setUserInfo([ userName, userDescription ]){
     this.#name = userName;
     this.#description = userDescription;
