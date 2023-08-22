@@ -5,14 +5,13 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta name="author" content="Meidoragon" />
       <title>Around the U.S.</title>
-      <link href="./pages/index.css" rel="stylesheet" />
   </head>
   <body class="page">
     <header class="header">
       <img 
         class="header__logo"
         alt="Around the US logo"
-        src="./images/atus_logo_light.svg"
+        src="<%=require('./images/atus_logo_light.svg')%>"
       />
     </header>
     <main>
@@ -20,7 +19,7 @@
         <img
           class="profile__avatar"
           alt="Jacques Cousteau"
-          src="./images/jacques-cousteau.png"
+          src="<%=require('./images/jacques-cousteau.png')%>"
         />
         <div class="profile__information">
           <h1 class="profile__name">Jacques Cousteau</h1>    
@@ -123,6 +122,5 @@
         <button class="card__button card__button_type_delete" type="button" aria-label="delete"></button>
       </li>
     </template>
-    <script type="module" src="./pages/index.js"></script>
   </body>
 </html>
