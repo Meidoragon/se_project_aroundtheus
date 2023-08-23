@@ -30,7 +30,7 @@ Around the US allows users to comfortably view, like, and add images, as well as
 ![Showcase of project features](../assets/around_US_showcase.gif?raw=true)
 
 **Link**
-* [Link to the project on Github Pages](https://meidoragon.github.cio/se_project_aroundtheus/)
+* [Link to the project on Github Pages](https://meidoragon.github.io/se_project_aroundtheus/)
 
 **TODO** 
 
