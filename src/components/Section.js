@@ -20,16 +20,19 @@ export default class Section {
   }
 
   /**
-   * add new item to section
+   * add new item to section at end
    * @param {element} element element to add to list
-   * @param {boolean} append whether the item needs to be added to the beginning or end of the list
    */
-  addItem(element, append = true) {
-    if (append){
-      this.#container.append(element);
-    } else {
-      this.#container.prepend(element);
-    }
+  appendItem(element){
+    this.#container.append(element);
+  }
+
+  /**
+   * add new item to beginning of section
+   * @param {element} element element to add to list
+   */
+  prependItem(element){
+    this.#container.prepend(element);
   }
 
   /**

@@ -18,7 +18,17 @@ export const SELECTORS = {
   cardEditor: '.card-modal',
   profileEditor: '.profile-modal',
   imageModal: '.preview-modal',
-  cardTemplate: '#card_template'
+  cardTemplate: '#card_template',
+}
+
+export const PROFILE_FIELDS = {
+  name: FORM_ELEMENTS.profileForm.querySelector('.name-input'),
+  description: FORM_ELEMENTS.profileForm.querySelector('.description-input')
+}
+
+export const CARD_FIELDS = {
+  name: FORM_ELEMENTS.addCardForm.querySelector('.title-input'),
+  link: FORM_ELEMENTS.addCardForm.querySelector('.link-input')
 }
 
 export const BUTTON_ELEMENTS = {

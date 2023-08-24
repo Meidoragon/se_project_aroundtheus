@@ -1,5 +1,3 @@
-import { DOM } from '../utils/constants.js';
-
 /**
  * the Popup class opens and closes the popup window
  */
@@ -34,17 +32,15 @@ export default class Popup {
 
   open(){
     this.#popupElement.classList.add('modal_opened');
-    this.setEventListeners();
+    document.addEventListener("keydown", this.#handleEscClose);
   }
 
-  close = () => {
+  close() {
     this.#popupElement.classList.remove('modal_opened');
-    this.#popupElement.removeEventListener("mousedown", this.handleClick);
-    DOM.removeEventListener("keydown", this.handleEscClose);
+    document.removeEventListener("keydown", this.handleEscClose);
   }
 
   setEventListeners() {
     this.#popupElement.addEventListener("mousedown", this.handleClick);
-    DOM.addEventListener("keydown", this.#handleEscClose);
   }
 }
