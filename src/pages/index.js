@@ -13,8 +13,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
 import FormValidator from '../components/FormValidator';
 import {BUTTON_ELEMENTS as buttons,
-        PROFILE_FIELDS as profileInputs,
-        CARD_FIELDS as cardInputs,
+        FORM_SELECTORS as formSelectors,
         SELECTORS as selectors,
         OTHER_ELEMENTS as elems,
         FIELD_ELEMENTS as fields,
@@ -22,30 +21,36 @@ import {BUTTON_ELEMENTS as buttons,
         VALIDATOR_OPTIONS as options } from '../utils/constants.js';
 
 
-//Initialize classes
+//Initialize (most) classes
 const user = new UserInfo(elems.profileName, elems.profileDescription);
 
 const imagePopup = new PopupWithImage(selectors.imageModal);
 imagePopup.setEventListeners();
 
-const profileFormPopup = new PopupWithForm(selectors.profileEditor, profileInputs, submitProfile);
+const profileFormPopup = new PopupWithForm(selectors.profileEditor, submitProfile);
 profileFormPopup.setEventListeners();
 
-const cardFormPopup = new PopupWithForm(selectors.cardEditor, cardInputs, submitCard)
+const cardFormPopup = new PopupWithForm(selectors.cardEditor, submitCard)
 cardFormPopup.setEventListeners();
 
 const gallery = new Section(cards, renderCard, elems.galleryCardList)
 gallery.renderItems();
 
-const profileValidator = new FormValidator(options, document.querySelector('.profile-form')); //TODO: unhardcode this
-const cardValidator = new FormValidator(options, document.querySelector('.card-form'));
-profileValidator.enableValidation();
-cardValidator.enableValidation();
+//Initialize validators
+const formValidators = {};
+const enableValidation = (options) => {
+  const formList = [...document.querySelectorAll(options.formSelector)];
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(options, formElement);
+    validator.enableValidation();
+    formValidators[formElement.getAttribute('id')] = validator;
+  })
+}
+enableValidation(options);
 
 //Functions to pass to class objects
 function submitProfile (evt) {
   evt.preventDefault();
-  console.log(profileFormPopup.getInputValues());
   user.setUserInfo(profileFormPopup.getInputValues());
   profileFormPopup.close();
 }
@@ -65,7 +70,6 @@ function submitCard(evt) {
   const card = createCard(item);
   gallery.prependItem(card);
   cardFormPopup.close();
-  cardValidator.resetValidation();
 }
 
 function renderCard(item) {
@@ -79,9 +83,9 @@ buttons.profileEditButton.addEventListener('click', () => {
   fields.editorName.value = info.name;
   fields.editorDescription.value = info.description;
   profileFormPopup.open();
-  profileValidator.resetValidation();
+  formValidators[formSelectors.profileFormSelector].resetValidation();
 });
 buttons.addCardButton.addEventListener('click', () => {
   cardFormPopup.open();
-  cardValidator.resetValidation();
+  formValidators[formSelectors.addCardFormSelector].resetValidation();
 });

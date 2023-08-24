@@ -10,22 +10,21 @@ export default class PopupWithForm extends Popup{
  * @param {string} popupSelector HTML element class name of modal to manage with this object
  * @param {function} handleFormSubmit
  */
-  constructor (popupSelector, fields, handleFormSubmit){
+  constructor (popupSelector, handleFormSubmit){
     super(popupSelector);
-    this.#formFieldset = this.getPopupElement().querySelector('.modal__form');
     this.#form = this.getPopupElement().querySelector('.modal__form-container');
-    this.#formFields = fields;
+    this.#formFields = this.#getFields();
     this.#formSubmit = handleFormSubmit;
   }
 
-  /**
-   * opens popup
-   */
-  open = () => {
-    super.open(); 
+  #getFields(){
+    const retObj = {};
+    this.#form.querySelectorAll('.modal__input').forEach((item) => {
+      retObj[item.id] = item;
+    })
+    return retObj;
   }
 
-  //TODO: unhardcode this. somehow do it in a way that does not make me need to rewrite this a third time.
   /**
    * @returns values in the form inputs
    */
