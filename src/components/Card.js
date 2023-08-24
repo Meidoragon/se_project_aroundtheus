@@ -1,5 +1,5 @@
 export default class Card{
-  #name;
+  #title;
   #link;
   #cardInfo
   #cardSelector;
@@ -14,10 +14,10 @@ export default class Card{
    * @param {Object} data {link, name} two element object containing the .text and image .link with which to make the card
    * @param {Element} cardSelector the template element that gets used to build the card element
    */
-  constructor({link, name}, clickHandler, cardSelector){
-    this.#name = name;
-    this.#link = link;
-    this.#cardInfo = {name: this.#name, link: this.#link};
+  constructor({url, title}, clickHandler, cardSelector){
+    this.#title = title;
+    this.#link = url;
+    this.#cardInfo = {title: this.#title, link: this.#link};
     this.#handleImageClick = clickHandler.bind(this);
     this.#cardSelector = cardSelector;
   }
@@ -69,8 +69,8 @@ export default class Card{
     const cardTitle = this.#cardElement.querySelector('.card__title');
 
     cardImage.src = this.#link;
-    cardImage.alt = this.#name;
-    cardTitle.textContent = this.#name;
+    cardImage.alt = this.#title;
+    cardTitle.textContent = this.#title;
 
     this.#setEventListeners();
 
