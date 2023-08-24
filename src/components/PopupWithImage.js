@@ -12,16 +12,17 @@ export default class PopupWithImage extends Popup{
     super(popupSelector);
     this.#popupImage = this.getPopupElement().querySelector('.modal__image');
     this.#popupTitle = this.getPopupElement().querySelector('.modal__image-title');
+    console.log(this.#popupTitle);
   }
 
   /**
    * modifies information on popup, then open it
    * @param {object} param0 object containing link and name values to image to add to popup
    */
-  open({link, name}){
+  open({link, title}){
     this.#popupImage.src = link;
-    this.#popupImage.alt = name;
-    this.#popupTitle.textContent = name;
+    this.#popupImage.alt = title;
+    this.#popupTitle.textContent = title;
     super.open();
   }
 }
