@@ -29,9 +29,9 @@ export default class UserInfo{
   /**
    * @param {array} param0 array containing user info [0] = name, [1] = description
    */
-  setUserInfo([ userName, userDescription ]){
-    this.#name = userName;
-    this.#description = userDescription;
+  setUserInfo({name, description}){
+    this.#name = name;
+    this.#description = description;
     this.#nameElement.textContent = this.#name;
     this.#descriptionElement.textContent = this.#description;
   }

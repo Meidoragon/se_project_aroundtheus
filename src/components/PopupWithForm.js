@@ -1,26 +1,21 @@
-import { VALIDATOR_OPTIONS } from '../utils/constants.js';
 import Popup from './Popup.js';
-import FormValidator from './FormValidator.js';
 export default class PopupWithForm extends Popup{
 
   #formFieldset
   #form
   #formFields
-  #validator
   #formSubmit
 /**
  * code for managing form popups
  * @param {string} popupSelector HTML element class name of modal to manage with this object
  * @param {function} handleFormSubmit
  */
-  constructor (popupSelector, handleFormSubmit){
+  constructor (popupSelector, fields, handleFormSubmit){
     super(popupSelector);
     this.#formFieldset = this.getPopupElement().querySelector('.modal__form');
     this.#form = this.getPopupElement().querySelector('.modal__form-container');
-    this.#formFields = [...this.#formFieldset.querySelectorAll('.modal__input')];
-    this.#formSubmit = handleFormSubmit.bind(this);
-    this.#validator = new FormValidator(VALIDATOR_OPTIONS, this.#formFieldset);
-    this.#validator.enableValidation();
+    this.#formFields = fields;
+    this.#formSubmit = handleFormSubmit;
   }
 
   /**
@@ -28,14 +23,18 @@ export default class PopupWithForm extends Popup{
    */
   open = () => {
     super.open(); 
-    this.#validator.toggleButtonState();
   }
 
+  //TODO: unhardcode this. somehow do it in a way that does not make me need to rewrite this a third time.
   /**
    * @returns values in the form inputs
    */
   getInputValues = () => {
-    return [ this.#formFields[0].value, this.#formFields[1].value ];
+    const retObj = {}
+    Object.keys(this.#formFields).forEach((key) => {
+      retObj[key] = this.#formFields[key].value;
+    })
+    return retObj;
   }
 
   /**
@@ -49,7 +48,8 @@ export default class PopupWithForm extends Popup{
   /**
    * resets form
    */
-  resetForm = () => {
+  close () {
+    super.close();
     this.#form.reset();
   }
 }

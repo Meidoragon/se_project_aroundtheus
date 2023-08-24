@@ -11,55 +11,77 @@ import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
-import {BUTTON_ELEMENTS as buttons, 
-        FORM_ELEMENTS as forms, 
+import FormValidator from '../components/FormValidator';
+import {BUTTON_ELEMENTS as buttons,
+        PROFILE_FIELDS as profileInputs,
+        CARD_FIELDS as cardInputs,
         SELECTORS as selectors,
         OTHER_ELEMENTS as elems,
         FIELD_ELEMENTS as fields,
-        INITIAL_CARDS as cards } from '../utils/constants.js';
+        INITIAL_CARDS as cards,
+        VALIDATOR_OPTIONS as options } from '../utils/constants.js';
 
-const imagePopup = new PopupWithImage(selectors.imageModal);
-const profileFormPopup = new PopupWithForm(selectors.profileEditor, submitProfile);
-profileFormPopup.setEventListeners();
-const cardFormPopup = new PopupWithForm(selectors.cardEditor, submitCard)
-cardFormPopup.setEventListeners();
-const gallery = new Section(cards, renderCard, elems.galleryCardList)
-gallery.renderItems();
+
+//Initialize classes
 const user = new UserInfo(elems.profileName, elems.profileDescription);
 
+const imagePopup = new PopupWithImage(selectors.imageModal);
+imagePopup.setEventListeners();
 
+const profileFormPopup = new PopupWithForm(selectors.profileEditor, profileInputs, submitProfile);
+profileFormPopup.setEventListeners();
+
+const cardFormPopup = new PopupWithForm(selectors.cardEditor, cardInputs, submitCard)
+cardFormPopup.setEventListeners();
+
+const gallery = new Section(cards, renderCard, elems.galleryCardList)
+gallery.renderItems();
+
+const profileValidator = new FormValidator(options, document.querySelector('.profile-form')); //TODO: unhardcode this
+const cardValidator = new FormValidator(options, document.querySelector('.card-form'));
+profileValidator.enableValidation();
+cardValidator.enableValidation();
+
+//Functions to pass to class objects
 function submitProfile (evt) {
   evt.preventDefault();
+  console.log(profileFormPopup.getInputValues());
   user.setUserInfo(profileFormPopup.getInputValues());
-  this.close();
+  profileFormPopup.close();
+}
+
+function createCard(item){
+  //ouroboros-chan...
+  const handleCardClick = () => {
+    imagePopup.open(card.getCardInfo());
+  }
+  const card = new Card(item, handleCardClick, selectors.cardTemplate);
+  return card.createCard();
 }
 
 function submitCard(evt) {
   evt.preventDefault();
-  const formInfo = cardFormPopup.getInputValues();
-  const item = {name: formInfo[0], link: formInfo[1]};
-  const newCard = new Card(item, handleCardClick, selectors.cardTemplate);
-  gallery.addItem(newCard.createCard(), false);
-  this.close();
-  this.resetForm();
-}
-
-function handleCardClick(){
-  imagePopup.open(this.getCardInfo());
+  const item = cardFormPopup.getInputValues();
+  const card = createCard(item);
+  gallery.prependItem(card);
+  cardFormPopup.close();
+  cardValidator.resetValidation();
 }
 
 function renderCard(item) {
-  const card = new Card(item, handleCardClick, selectors.cardTemplate);
-  this.addItem(card.createCard());
+  const card = createCard(item);
+  gallery.appendItem(card);
 }
 
-//event listeners. 
+//Event listeners. 
 buttons.profileEditButton.addEventListener('click', () => {
   const info = user.getUserInfo();
   fields.editorName.value = info.name;
   fields.editorDescription.value = info.description;
-  profileFormPopup.open(user.getUserInfo());
+  profileFormPopup.open();
+  profileValidator.resetValidation();
 });
 buttons.addCardButton.addEventListener('click', () => {
   cardFormPopup.open();
+  cardValidator.resetValidation();
 });

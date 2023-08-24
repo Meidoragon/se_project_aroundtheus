@@ -55,11 +55,11 @@ export default class FormValidator{
       return !input.validity.valid;
     });
   };
-  
+
   /**
    * Check the current state of the form, and toggle button functionality accordingly.
    */
-  toggleButtonState(){
+  #toggleButtonState(){
     if (this.#hasInvalidInput()){
       this.#submitButton.disabled = true;
       this.#submitButton.classList.add(this.#inactiveButtonClass);
@@ -70,14 +70,24 @@ export default class FormValidator{
   };
 
   /**
+   * Reset validation to default state
+   */
+  resetValidation() {
+    this.#toggleButtonState();
+    this.#formInputList.forEach((inputElement) => {
+      this.#hideError(inputElement);
+    })
+  }
+
+  /**
    * Enable validation of the fieldset object
    */
   enableValidation() {
     this.#formInputList = [...this.#formElement.querySelectorAll(this.#inputSelector)];
-    this.toggleButtonState();
+    this.#toggleButtonState();
     this.#formInputList.forEach((inputElement) => {
       inputElement.addEventListener('input', (evt) => {
-        this.toggleButtonState();
+        this.#toggleButtonState();
         this.#checkInputValidity(inputElement);
       });
     });
