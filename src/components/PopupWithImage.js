@@ -12,7 +12,6 @@ export default class PopupWithImage extends Popup{
     super(popupSelector);
     this.#popupImage = this.getPopupElement().querySelector('.modal__image');
     this.#popupTitle = this.getPopupElement().querySelector('.modal__image-title');
-    console.log(this.#popupTitle);
   }
 
   /**
