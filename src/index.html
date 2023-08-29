@@ -111,6 +111,23 @@
         <h2 class="modal__confirmation-title"></h2>
         <button type="button" id="confirmation-button" class="modal__confirmation-button">Yes</button>
       </section>
+      <section class="modal update-avatar-modal">
+        <h2 class="modal__avatar-update-title"></h2>
+        <form class="modal__form-container">
+          <fieldset class="modal__form avatar-form">
+            <label class="modal__label">
+              <input
+                type="url"
+                id="avatar"
+                class="modal__input avatar-input"
+                placeholder="Image URL"
+                required
+              />
+              <button type="submit" id="avatar_submit_button" class="modal__button">Save</button>
+            </label>
+          </fieldset>
+        </form>
+      </section>
     </main>
     <footer class="footer">
       <p class="footer__copywrite">© 2022 Around The U.S.</p>
