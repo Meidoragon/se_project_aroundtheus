@@ -4,3 +4,4 @@ scripts/cards.js
 .ignoreme*
 *Card2.js*
 /node_modules/
+/dist/
