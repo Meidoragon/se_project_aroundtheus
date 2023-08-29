@@ -11,14 +11,17 @@ import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
-import FormValidator from '../components/FormValidator';
+import FormValidator from '../components/FormValidator.js';
+import API from '../components/API.js';
 import {BUTTON_ELEMENTS as buttons,
         FORM_SELECTORS as formSelectors,
         SELECTORS as selectors,
         OTHER_ELEMENTS as elems,
         FIELD_ELEMENTS as fields,
         INITIAL_CARDS as cards,
-        VALIDATOR_OPTIONS as options } from '../utils/constants.js';
+        VALIDATOR_OPTIONS as options,
+        API_OPTIONS as apiOptions, 
+        INITIAL_CARDS} from '../utils/constants.js';
 
 
 //Initialize (most) classes
@@ -47,6 +50,13 @@ const enableValidation = (options) => {
   })
 }
 enableValidation(options);
+
+//Initialize API
+const api = new API(apiOptions)
+//test add new card
+api.addNewCard(INITIAL_CARDS[0]);
+api.getUserID();
+
 
 //Functions to pass to class objects
 function submitProfile (evt) {
