@@ -4,14 +4,18 @@ export default class API {
   #headers
   constructor(options){
     this.#baseURL = options.baseURL;
-    this.#headers = options.headers;
+    this.#headers = options.headers; 
+  }
 
-    
-    
+  #handleResponse(response){
+    if (response.ok) {
+      return response.json();
+    } else {
+      return Promise.reject(`Error: ${res.status}`);
+    }
   }
 
   addNewCard(item){
-    //adding new cards returns status 400
     return fetch(`${this.#baseURL}/cards`, {
       method: "POST",
       headers: this.#headers,
@@ -20,16 +24,13 @@ export default class API {
         link: item.url
       })
     })
-      // .then(res => res.json())
-      // .then((response) => console.log(response));
+      .then(res => this.#handleResponse)
   }
 
   getUserID(){
-    //however getting the ID works fine
     fetch(`${this.#baseURL}/users/me`, {
       headers: this.#headers
     })
-      // .then(res => res.json())
-      // .then((response) => console.log(response));
+      .then(res => this.#handleResponse)
   }
 }

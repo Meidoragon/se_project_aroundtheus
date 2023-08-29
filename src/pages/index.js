@@ -53,7 +53,13 @@ enableValidation(options);
 
 //Initialize API
 const api = new API(apiOptions)
-//test add new card
+
+/**
+ * TODO: Fix this
+ * Adding a card returns status 400, but getting the user information works fine.
+ * API is saying 'name' and 'link' are empty, but the payloads clearly show that it isn't true.
+ * Is it something to do with my headers?
+ */
 api.addNewCard(INITIAL_CARDS[0]);
 api.getUserID();
 
