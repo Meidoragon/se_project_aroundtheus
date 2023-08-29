@@ -1,5 +1,13 @@
 export const DOM = document;
 
+export const API_OPTIONS = {
+  baseURL: 'https://around-api.en.tripleten-services.com/v1',
+  headers: {
+    authorization: '855bc2dc-d7e9-4b86-b39d-0756d927d932',
+    'Content-Type': 'applications/json'
+  }
+}
+
 export const VALIDATOR_OPTIONS = {
   formSelector: ".modal__form-container",
   inputSelector: ".modal__input",
