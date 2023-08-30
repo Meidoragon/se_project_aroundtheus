@@ -16,29 +16,25 @@ export default class API {
   }
 
   addNewCard(item){
-    console.log(item);
     return fetch(`${this.#baseURL}/cards`, {
       method: "POST",
       headers: this.#headers,
       body: JSON.stringify(item)
     })
-      .then(res => this.#handleResponse)
+      .then(this.#handleResponse)
   }
 
-  getUserID(){
+  getUserInfo(){
     fetch(`${this.#baseURL}/users/me`, {
       headers: this.#headers
     })
-      .then(res => this.#handleResponse)
+      .then(this.#handleResponse)
   }
 
   getCardList(){
-    fetch(`${this.#baseURL}/cards`, {
+    return fetch(`${this.#baseURL}/cards`, {
       headers: this.#headers
     })
-      .then(res => this.#handleResponse)
-      .then((result) => {
-        // console.log(result)
-      })
+      .then(this.#handleResponse);
   }
 }

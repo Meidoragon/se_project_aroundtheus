@@ -25,7 +25,16 @@ import {BUTTON_ELEMENTS as buttons,
 
 //Initialize API
 const api = new API(apiOptions)
-const cards = api.getCardList();
+const gallery = Promise.all([api.getCardList(), api.getUserInfo()])
+  .then(([cards, userInfo]) => {
+    function renderCard(item) {
+      const card = createCard(item);
+      gallery.appendItem(card);
+    }
+
+    const gallery = new Section(cards, renderCard, elems.galleryCardList);
+    gallery.renderItems();
+  });
 
 //Initialize (most) classes
 const user = new UserInfo(elems.profileName, elems.profileDescription);
@@ -39,8 +48,8 @@ profileFormPopup.setEventListeners();
 const cardFormPopup = new PopupWithForm(selectors.cardEditor, submitCard)
 cardFormPopup.setEventListeners();
 
-const gallery = new Section(cards, renderCard, elems.galleryCardList)
-gallery.renderItems();
+// const gallery = new Section(cards, renderCard, elems.galleryCardList)
+// gallery.renderItems();
 
 //Initialize validators
 const formValidators = {};
@@ -85,8 +94,6 @@ function createCard(item){
 function submitCard(evt) {
   evt.preventDefault();
   const item = cardFormPopup.getInputValues();
-  // console.log(item.title);
-  // console.log(item.url);
   api.addNewCard({"name": item.title, "link": item.url})
   const card = createCard(item);
   gallery.prependItem(card);
@@ -101,7 +108,7 @@ function renderCard(item) {
 //Event listeners. 
 buttons.profileEditButton.addEventListener('click', () => {
   const info = user.getUserInfo();
-  fields.editorName.value = info.name;
+  fields.editorName.value = info.username;
   fields.editorDescription.value = info.description;
   profileFormPopup.open();
   formValidators[formSelectors.profileFormSelector].resetValidation();
