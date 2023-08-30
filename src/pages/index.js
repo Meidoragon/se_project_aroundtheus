@@ -18,11 +18,14 @@ import {BUTTON_ELEMENTS as buttons,
         SELECTORS as selectors,
         OTHER_ELEMENTS as elems,
         FIELD_ELEMENTS as fields,
-        INITIAL_CARDS as cards,
+        INITIAL_CARDS as initialCards,
         VALIDATOR_OPTIONS as options,
         API_OPTIONS as apiOptions, 
         INITIAL_CARDS} from '../utils/constants.js';
 
+//Initialize API
+const api = new API(apiOptions)
+const cards = api.getCardList();
 
 //Initialize (most) classes
 const user = new UserInfo(elems.profileName, elems.profileDescription);
@@ -51,8 +54,7 @@ const enableValidation = (options) => {
 }
 enableValidation(options);
 
-//Initialize API
-const api = new API(apiOptions)
+
 
 /**
  * TODO: Fix this
@@ -60,8 +62,8 @@ const api = new API(apiOptions)
  * API is saying 'name' and 'link' are empty, but the payloads clearly show that it isn't true.
  * Is it something to do with my headers?
  */
-api.addNewCard(INITIAL_CARDS[0]);
-api.getUserID();
+// api.addNewCard(INITIAL_CARDS[0]);
+// api.getUserID();
 
 
 //Functions to pass to class objects
@@ -83,6 +85,9 @@ function createCard(item){
 function submitCard(evt) {
   evt.preventDefault();
   const item = cardFormPopup.getInputValues();
+  // console.log(item.title);
+  // console.log(item.url);
+  api.addNewCard({"name": item.title, "link": item.url})
   const card = createCard(item);
   gallery.prependItem(card);
   cardFormPopup.close();
