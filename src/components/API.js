@@ -25,7 +25,7 @@ export default class API {
   }
 
   getUserInfo(){
-    fetch(`${this.#baseURL}/users/me`, {
+    return fetch(`${this.#baseURL}/users/me`, {
       headers: this.#headers
     })
       .then(this.#handleResponse)

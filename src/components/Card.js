@@ -18,7 +18,7 @@ export default class Card{
     this.#title = name;
     this.#link = link;
     this.#cardInfo = {title: this.#title, link: this.#link};
-    this.#handleImageClick = clickHandler.bind(this);
+    this.#handleImageClick = clickHandler;
     this.#cardSelector = cardSelector;
   }
 

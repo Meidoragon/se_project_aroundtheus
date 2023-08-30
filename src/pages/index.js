@@ -27,6 +27,7 @@ import {BUTTON_ELEMENTS as buttons,
 const api = new API(apiOptions)
 const gallery = Promise.all([api.getCardList(), api.getUserInfo()])
   .then(([cards, userInfo]) => {
+    console.log(userInfo);
     function renderCard(item) {
       const card = createCard(item);
       gallery.appendItem(card);
