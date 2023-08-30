@@ -14,9 +14,9 @@ export default class Card{
    * @param {Object} data {link, name} two element object containing the .text and image .link with which to make the card
    * @param {Element} cardSelector the template element that gets used to build the card element
    */
-  constructor({url, title}, clickHandler, cardSelector){
-    this.#title = title;
-    this.#link = url;
+  constructor({link, name}, clickHandler, cardSelector){
+    this.#title = name;
+    this.#link = link;
     this.#cardInfo = {title: this.#title, link: this.#link};
     this.#handleImageClick = clickHandler.bind(this);
     this.#cardSelector = cardSelector;
