@@ -39,8 +39,13 @@ export default class Section {
    * render initial list of items
    */
   renderItems(){
-    this.#renderedItems.forEach(item => {
-      this.#renderer(item);
-    });
+    // console.log(this.#renderedItems);
+    if (this.#renderedItems !== undefined){
+      this.#renderedItems.forEach(item => {
+        this.#renderer(item);
+      });
+    } else {
+      console.warn('Card list empty. Rendering 0 cards.')
+    }
   }
 }
