@@ -4,7 +4,7 @@ export const API_OPTIONS = {
   baseURL: 'https://around-api.en.tripleten-services.com/v1',
   headers: {
     authorization: '855bc2dc-d7e9-4b86-b39d-0756d927d932',
-    'Content-Type': 'applications/json'
+    'Content-Type': 'application/json'
   }
 }
 
@@ -50,7 +50,7 @@ export const BUTTON_ELEMENTS = {
 }
 
 export const FIELD_ELEMENTS = {
-  editorName: FORM_ELEMENTS.profileForm.elements.name,
+  editorName: FORM_ELEMENTS.profileForm.elements.username,
   editorDescription: FORM_ELEMENTS.profileForm.elements.description,
   cardName: FORM_ELEMENTS.addCardForm.elements.name,
   cardURL: FORM_ELEMENTS.addCardForm.elements.url
