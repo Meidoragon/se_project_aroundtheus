@@ -4,7 +4,7 @@
 export default class UserInfo{
   #nameElement;
   #descriptionElement;
-  #name;
+  #username;
   #description;
 
   /**
@@ -15,7 +15,7 @@ export default class UserInfo{
   constructor(name, description){
     this.#nameElement = name;
     this.#descriptionElement = description;
-    this.#name = this.#nameElement.textContent;
+    this.#username = this.#nameElement.textContent;
     this.#description = this.#descriptionElement.textContent
   }
 
@@ -23,16 +23,16 @@ export default class UserInfo{
    * @returns object containing user info
    */
   getUserInfo(){
-    return {name: this.#name, description: this.#description};
+    return {username: this.#username, description: this.#description};
   }
 
   /**
    * @param {array} param0 array containing user info [0] = name, [1] = description
    */
-  setUserInfo({name, description}){
-    this.#name = name;
+  setUserInfo({username, description}){
+    this.#username = username;
     this.#description = description;
-    this.#nameElement.textContent = this.#name;
+    this.#nameElement.textContent = this.#username;
     this.#descriptionElement.textContent = this.#description;
   }
 }
