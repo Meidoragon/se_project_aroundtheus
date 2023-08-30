@@ -16,13 +16,11 @@ export default class API {
   }
 
   addNewCard(item){
+    console.log(item);
     return fetch(`${this.#baseURL}/cards`, {
       method: "POST",
       headers: this.#headers,
-      body: JSON.stringify({
-        name: item.title,
-        link: item.url
-      })
+      body: JSON.stringify(item)
     })
       .then(res => this.#handleResponse)
   }
@@ -32,5 +30,15 @@ export default class API {
       headers: this.#headers
     })
       .then(res => this.#handleResponse)
+  }
+
+  getCardList(){
+    fetch(`${this.#baseURL}/cards`, {
+      headers: this.#headers
+    })
+      .then(res => this.#handleResponse)
+      .then((result) => {
+        // console.log(result)
+      })
   }
 }
