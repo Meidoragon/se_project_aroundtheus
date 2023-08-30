@@ -40,7 +40,6 @@ export default class Section {
    */
   renderItems(){
     this.#renderedItems.forEach((item) => {
-      console.log(item);
       this.#renderer(item);
     });
   }

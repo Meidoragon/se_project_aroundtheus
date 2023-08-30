@@ -18,27 +18,10 @@ import {BUTTON_ELEMENTS as buttons,
         SELECTORS as selectors,
         OTHER_ELEMENTS as elems,
         FIELD_ELEMENTS as fields,
-        INITIAL_CARDS as initialCards,
         VALIDATOR_OPTIONS as options,
-        API_OPTIONS as apiOptions, 
-        INITIAL_CARDS} from '../utils/constants.js';
-
-//Initialize API
-const api = new API(apiOptions)
-const gallery = Promise.all([api.getCardList(), api.getUserInfo()])
-  .then(([cards, userInfo]) => {
-    console.log(userInfo);
-    function renderCard(item) {
-      const card = createCard(item);
-      gallery.appendItem(card);
-    }
-
-    const gallery = new Section(cards, renderCard, elems.galleryCardList);
-    gallery.renderItems();
-  });
+        API_OPTIONS as apiOptions} from '../utils/constants.js';
 
 //Initialize (most) classes
-const user = new UserInfo(elems.profileName, elems.profileDescription);
 
 const imagePopup = new PopupWithImage(selectors.imageModal);
 imagePopup.setEventListeners();
@@ -48,6 +31,10 @@ profileFormPopup.setEventListeners();
 
 const cardFormPopup = new PopupWithForm(selectors.cardEditor, submitCard)
 cardFormPopup.setEventListeners();
+
+//hold these variable names for me JS. Arigatou.
+let gallery;
+let user;
 
 // const gallery = new Section(cards, renderCard, elems.galleryCardList)
 // gallery.renderItems();
@@ -63,18 +50,6 @@ const enableValidation = (options) => {
   })
 }
 enableValidation(options);
-
-
-
-/**
- * TODO: Fix this
- * Adding a card returns status 400, but getting the user information works fine.
- * API is saying 'name' and 'link' are empty, but the payloads clearly show that it isn't true.
- * Is it something to do with my headers?
- */
-// api.addNewCard(INITIAL_CARDS[0]);
-// api.getUserID();
-
 
 //Functions to pass to class objects
 function submitProfile (evt) {
@@ -106,6 +81,11 @@ function renderCard(item) {
   gallery.appendItem(card);
 }
 
+// function renderCard(item) {
+//   const card = createCard(item);
+//   gallery.appendItem(card);
+// }
+
 //Event listeners. 
 buttons.profileEditButton.addEventListener('click', () => {
   const info = user.getUserInfo();
@@ -118,3 +98,15 @@ buttons.addCardButton.addEventListener('click', () => {
   cardFormPopup.open();
   formValidators[formSelectors.addCardFormSelector].resetValidation();
 });
+
+//Initialize API interactions
+const api = new API(apiOptions)
+Promise.all([api.getCardList(), api.getUserInfo()])
+  .then(([cards, userInfo]) => {
+    const elements = {nameElement: elems.profileName, descriptionElement: elems.profileDescription};
+    user = new UserInfo(elements, {name: userInfo.name, about: userInfo.about});
+    gallery = new Section(cards, renderCard, elems.galleryCardList);
+
+    gallery.renderItems();
+  });
+
