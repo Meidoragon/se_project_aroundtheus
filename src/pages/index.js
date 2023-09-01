@@ -4,6 +4,8 @@ TODO:
     either find the element outside of the class and send that, 
     or send the selector and find it in the class.
     Pick one.
+  When loading images, either on initial load, or after creating a new one
+    perhaps utilize .onload and .onerror to stop showing the image loads?
 */
 import './index.css';
 import Card from "../components/Card.js";
@@ -70,7 +72,6 @@ function createCard(item){
 function submitCard(evt) {
   evt.preventDefault();
   const item = cardFormPopup.getInputValues();
-  api.addNewCard({"name": item.title, "link": item.url})
   const card = createCard(item);
   gallery.prependItem(card);
   cardFormPopup.close();
@@ -104,9 +105,12 @@ const api = new API(apiOptions)
 Promise.all([api.getCardList(), api.getUserInfo()])
   .then(([cards, userInfo]) => {
     const elements = {nameElement: elems.profileName, descriptionElement: elems.profileDescription};
-    user = new UserInfo(elements, {name: userInfo.name, about: userInfo.about});
+    user = new UserInfo(elements, userInfo, sendInfo);
     gallery = new Section(cards, renderCard, elems.galleryCardList);
 
     gallery.renderItems();
   });
 
+function sendInfo(newName, newDescription) {
+  return api.patchUserInfo(newName, newDescription);
+}
