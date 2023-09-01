@@ -1,6 +1,8 @@
 export default class Card{
   #name;
   #link;
+  #isLiked
+  #cardId
   #cardInfo
   #cardSelector;
   #cardElement;
@@ -9,38 +11,46 @@ export default class Card{
   #cardImage;
   #handleImageClick
   #confirmDeletion
-  #cardId
+  #sendLikeInfo
+ 
+  
 
   /**
    * Code for creating new cards from a template and an object containing the text and image url
    * @param {Object} item {link, name, _id} object containing the .text and image .link with which to make the card as well as the ._id of the card on the server
    * @param {Element} cardSelector the template element that gets used to build the card element
    */
-  constructor(item, handleImageClick, confirmDeletion, cardSelector){
+  constructor(item, {handleImageClick, confirmDeletion, sendLikeInfo}, cardSelector){
     this.#name = item.name;
     this.#link = item.link;
+    this.#isLiked = item.isLiked;
     this.#cardId = item._id;
     this.#cardInfo = {title: this.#name, link: this.#link};
     this.#handleImageClick = handleImageClick;
     this.#confirmDeletion = confirmDeletion;
+    this.#sendLikeInfo = sendLikeInfo;
     this.#cardSelector = cardSelector;
+
+    this.#cardElement = document
+    .querySelector(this.#cardSelector)
+    .content.querySelector('.card')
+    .cloneNode(true);
+
+    this.#likeButton = this.#cardElement.querySelector('.card__button_type_like-inactive');
+    this.#deleteButton = this.#cardElement.querySelector('.card__button_type_delete');
+    this.#cardImage = this.#cardElement.querySelector('.card__image');
   }
 
   #handleLikeClick = () => {
+    this.#sendLikeInfo(this.#isLiked);
     this.#likeButton.classList.toggle('card__button_type_like-active');
   }
 
   #handleDeleteClick = () => {
     this.#confirmDeletion();
-    // this.#cardElement.remove();
-    // this.#cardElement = null;
   }
 
   #setEventListeners = () => {
-    this.#likeButton = this.#cardElement.querySelector('.card__button_type_like-inactive');
-    this.#deleteButton = this.#cardElement.querySelector('.card__button_type_delete');
-    this.#cardImage = this.#cardElement.querySelector('.card__image');
-
     this.#likeButton.addEventListener('mousedown', () => {
       this.#handleLikeClick();
     });
@@ -73,11 +83,9 @@ export default class Card{
    * @returns the card element to be added to the card grid
    */
   createCard = () => {
-    this.#cardElement = document
-      .querySelector(this.#cardSelector)
-      .content.querySelector('.card')
-      .cloneNode(true);
-
+    if (this.#isLiked) {
+      this.#likeButton.classList.add('card__button_type_like-active');
+    }
     const cardImage = this.#cardElement.querySelector('.card__image');
     const cardTitle = this.#cardElement.querySelector('.card__title');
 

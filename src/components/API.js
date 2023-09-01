@@ -71,4 +71,22 @@ export default class API {
       .then(this.#handleResponse)
       .catch(this.#catchErrors);
   }
+
+  addCardLike(cardId){
+    return fetch(`${this.#baseURL}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this.#headers
+    })
+      .then(this.#handleResponse)
+      .catch(this.#catchErrors);
+  }
+
+  removeCardLike(cardId){
+    return fetch(`${this.#baseURL}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this.#headers
+    })
+      .then(this.#handleResponse)
+      .catch(this.#catchErrors);
+  }
 }

@@ -74,7 +74,20 @@ function createCard(item){
     cardDeletionConfirmation.open(card)
   }
 
-  const card = new Card(item, handleCardClick, handleDeleteClick, selectors.cardTemplate);
+  const handleLikeClick = (isLiked) => {
+    if (isLiked) {
+      api.removeCardLike(card.getCardId());
+    } else {
+      api.addCardLike(card.getCardId());
+    }
+  }
+
+  const functions = {
+    handleImageClick: handleCardClick,
+    confirmDeletion: handleDeleteClick,
+    sendLikeInfo: handleLikeClick}
+
+  const card = new Card(item, functions, selectors.cardTemplate);
   return card.createCard();
 }
 
