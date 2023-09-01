@@ -35,8 +35,8 @@ profileFormPopup.setEventListeners();
 const cardFormPopup = new PopupWithForm(selectors.cardEditor, submitCard)
 cardFormPopup.setEventListeners();
 
-const confirmationPopup = new PopupConfirmation(selectors.confirmationModal)
-confirmationPopup.setEventListeners();
+const cardDeletionConfirmation = new PopupConfirmation(selectors.confirmationModal, confirmDeletion)
+cardDeletionConfirmation.setEventListeners();
 
 //hold these variable names for me JS. Arigatou.
 let gallery;
@@ -71,11 +71,17 @@ function createCard(item){
   }
 
   const handleDeleteClick = () => {
-    confirmationPopup.open(card.getCardId())
+    cardDeletionConfirmation.open(card)
   }
 
   const card = new Card(item, handleCardClick, handleDeleteClick, selectors.cardTemplate);
   return card.createCard();
+}
+
+function confirmDeletion(card){
+  api.deleteCard(card.getCardId());
+  card.getCardElement().remove();
+  card = null;
 }
 
 function submitCard(evt) {

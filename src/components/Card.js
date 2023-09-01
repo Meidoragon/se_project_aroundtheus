@@ -24,7 +24,6 @@ export default class Card{
     this.#handleImageClick = handleImageClick;
     this.#confirmDeletion = confirmDeletion;
     this.#cardSelector = cardSelector;
-    console.log(this.#cardId);
   }
 
   #handleLikeClick = () => {
@@ -63,6 +62,10 @@ export default class Card{
 
   getCardId(){
     return this.#cardId;
+  }
+
+  getCardElement(){
+    return this.#cardElement;
   }
 
   /**
