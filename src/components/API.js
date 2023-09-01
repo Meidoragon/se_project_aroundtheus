@@ -56,6 +56,18 @@ export default class API {
       .catch(this.#catchErrors);
   }
 
+  updateAvatar(link){
+    return fetch (`${this.#baseURL}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this.#headers,
+      body: JSON.stringify({
+        avatar: link,
+      })
+    })
+      .then(this.#handleResponse)
+      .catch(this.#catchErrors);
+  }
+
   getUserInfo(){
     return fetch(`${this.#baseURL}/users/me`, {
       headers: this.#headers
