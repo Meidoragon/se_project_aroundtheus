@@ -4,7 +4,7 @@ export default class PopupConfirmation extends Popup{
   #buttonElement
   constructor (popupSelector){
     super(popupSelector);
-    this.#buttonElement = this.getPopupElement.querySelector('.modal__confirmation-button')
+    this.#buttonElement = this.getPopupElement().querySelector('.modal__button')
   }
 
   #handleButtonClick(evt){

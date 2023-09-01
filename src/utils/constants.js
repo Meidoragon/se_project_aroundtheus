@@ -31,6 +31,7 @@ export const SELECTORS = {
   cardEditor: '.card-modal',
   profileEditor: '.profile-modal',
   imageModal: '.preview-modal',
+  confirmationModal: '.confirmation-modal',
   cardTemplate: '#card_template',
 }
 

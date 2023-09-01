@@ -8,6 +8,7 @@ export default class Card{
   #deleteButton;
   #cardImage;
   #handleImageClick
+  #confirmDeletion
   #cardId
 
   /**
@@ -15,12 +16,13 @@ export default class Card{
    * @param {Object} item {link, name, _id} object containing the .text and image .link with which to make the card as well as the ._id of the card on the server
    * @param {Element} cardSelector the template element that gets used to build the card element
    */
-  constructor(item, clickHandler, cardSelector){
+  constructor(item, handleImageClick, confirmDeletion, cardSelector){
     this.#name = item.name;
     this.#link = item.link;
     this.#cardId = item._id;
     this.#cardInfo = {title: this.#name, link: this.#link};
-    this.#handleImageClick = clickHandler;
+    this.#handleImageClick = handleImageClick;
+    this.#confirmDeletion = confirmDeletion;
     this.#cardSelector = cardSelector;
     console.log(this.#cardId);
   }
@@ -30,8 +32,9 @@ export default class Card{
   }
 
   #handleDeleteClick = () => {
-    this.#cardElement.remove();
-    this.#cardElement = null;
+    this.#confirmDeletion();
+    // this.#cardElement.remove();
+    // this.#cardElement = null;
   }
 
   #setEventListeners = () => {

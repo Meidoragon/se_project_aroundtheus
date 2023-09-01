@@ -10,6 +10,7 @@ TODO:
 import './index.css';
 import Card from "../components/Card.js";
 import Section from "../components/Section.js";
+import PopupConfirmation from '../components/PopupConfirmation';
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
@@ -33,6 +34,9 @@ profileFormPopup.setEventListeners();
 
 const cardFormPopup = new PopupWithForm(selectors.cardEditor, submitCard)
 cardFormPopup.setEventListeners();
+
+const confirmationPopup = new PopupConfirmation(selectors.confirmationModal)
+confirmationPopup.setEventListeners();
 
 //hold these variable names for me JS. Arigatou.
 let gallery;
@@ -65,7 +69,13 @@ function createCard(item){
   const handleCardClick = () => {
     imagePopup.open(card.getCardInfo());
   }
-  return new Card(item, handleCardClick, selectors.cardTemplate).createCard();
+
+  const handleDeleteClick = () => {
+    confirmationPopup.open(card.getCardId())
+  }
+
+  const card = new Card(item, handleCardClick, handleDeleteClick, selectors.cardTemplate);
+  return card.createCard();
 }
 
 function submitCard(evt) {
