@@ -15,6 +15,10 @@ export default class API {
     }
   }
 
+  #catchErrors(response){
+    console.error(response);
+  }
+
   /**
    * 
    * @param {object} item object with 'name' and 'link' elements containing the title of and link to an image to add
@@ -27,6 +31,7 @@ export default class API {
       body: JSON.stringify(item)
     })
       .then(this.#handleResponse)
+      .catch(this.#catchErrors);
   }
 
   patchUserInfo(newName, newDescription){
@@ -39,6 +44,7 @@ export default class API {
       })
     })
       .then(this.#handleResponse)
+      .catch(this.#catchErrors);
   }
 
   deleteCard(cardId){
@@ -47,6 +53,7 @@ export default class API {
       headers: this.#headers
     })
       .then(this.#handleResponse)
+      .catch(this.#catchErrors);
   }
 
   getUserInfo(){
@@ -54,16 +61,14 @@ export default class API {
       headers: this.#headers
     })
       .then(this.#handleResponse)
+      .catch(this.#catchErrors);
   }
 
   getCardList(){
     return fetch(`${this.#baseURL}/cards`, {
       headers: this.#headers
     })
-      .then(this.#handleResponse);
+      .then(this.#handleResponse)
+      .catch(this.#catchErrors);
   }
-
-
 }
-
-

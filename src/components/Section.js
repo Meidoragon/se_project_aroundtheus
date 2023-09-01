@@ -15,7 +15,7 @@ export default class Section {
    */
   constructor(items, renderer, element) {
     this.#renderedItems = items;
-    this.#renderer = renderer.bind(this);
+    this.#renderer = renderer;
     this.#container = element;
   }
 

@@ -65,16 +65,19 @@ function createCard(item){
   const handleCardClick = () => {
     imagePopup.open(card.getCardInfo());
   }
-  const card = new Card(item, handleCardClick, selectors.cardTemplate);
-  return card.createCard();
+  return new Card(item, handleCardClick, selectors.cardTemplate).createCard();
 }
 
 function submitCard(evt) {
   evt.preventDefault();
-  const item = cardFormPopup.getInputValues();
-  const card = createCard(item);
-  gallery.prependItem(card);
-  cardFormPopup.close();
+  api.addNewCard(cardFormPopup.getInputValues())
+    .then((item) => {
+      const card = createCard(item);
+      gallery.prependItem(card);
+    })
+    .finally(() => {
+      cardFormPopup.close();
+    })
 }
 
 function renderCard(item) {
@@ -105,12 +108,12 @@ const api = new API(apiOptions)
 Promise.all([api.getCardList(), api.getUserInfo()])
   .then(([cards, userInfo]) => {
     const elements = {nameElement: elems.profileName, descriptionElement: elems.profileDescription};
-    user = new UserInfo(elements, userInfo, sendInfo);
+    user = new UserInfo(elements, userInfo, updateUserInfo);
     gallery = new Section(cards, renderCard, elems.galleryCardList);
 
     gallery.renderItems();
   });
 
-function sendInfo(newName, newDescription) {
+function updateUserInfo(newName, newDescription) {
   return api.patchUserInfo(newName, newDescription);
 }

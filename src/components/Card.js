@@ -1,5 +1,5 @@
 export default class Card{
-  #title;
+  #name;
   #link;
   #cardInfo
   #cardSelector;
@@ -8,18 +8,21 @@ export default class Card{
   #deleteButton;
   #cardImage;
   #handleImageClick
+  #cardId
 
   /**
    * Code for creating new cards from a template and an object containing the text and image url
-   * @param {Object} data {link, name} two element object containing the .text and image .link with which to make the card
+   * @param {Object} item {link, name, _id} object containing the .text and image .link with which to make the card as well as the ._id of the card on the server
    * @param {Element} cardSelector the template element that gets used to build the card element
    */
-  constructor({link, name}, clickHandler, cardSelector){
-    this.#title = name;
-    this.#link = link;
-    this.#cardInfo = {title: this.#title, link: this.#link};
+  constructor(item, clickHandler, cardSelector){
+    this.#name = item.name;
+    this.#link = item.link;
+    this.#cardId = item._id;
+    this.#cardInfo = {title: this.#name, link: this.#link};
     this.#handleImageClick = clickHandler;
     this.#cardSelector = cardSelector;
+    console.log(this.#cardId);
   }
 
   #handleLikeClick = () => {
@@ -55,6 +58,10 @@ export default class Card{
     return this.#cardInfo;
   }
 
+  getCardId(){
+    return this.#cardId;
+  }
+
   /**
    * Creates and returns the entire card element, ready to be displayed.
    * @returns the card element to be added to the card grid
@@ -69,8 +76,8 @@ export default class Card{
     const cardTitle = this.#cardElement.querySelector('.card__title');
 
     cardImage.src = this.#link;
-    cardImage.alt = this.#title;
-    cardTitle.textContent = this.#title;
+    cardImage.alt = this.#name;
+    cardTitle.textContent = this.#name;
 
     this.#setEventListeners();
 
