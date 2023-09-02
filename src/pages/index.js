@@ -114,12 +114,6 @@ function createCard(item){
   return card.createCard();
 }
 
-//
-function updateUserInfo(newName, newDescription) {
-  console.error('give me the stack trace');
-  return api.patchUserInfo(newName, newDescription);
-}
-
 // console.log(buttons.confirmationButton.textContent);
 // console.log(buttons.cardSubmitButton.textContent);
 // console.log(buttons.profileSubmitButton.textContent);
@@ -150,6 +144,7 @@ function confirmDeletion(card){
 
 function submitCard(evt) {
   evt.preventDefault();
+  buttons.cardSubmitButton.textContent = 'Saving...';
   api.addNewCard(cardFormPopup.getInputValues())
     .then((item) => {
       const card = createCard(item);
@@ -159,6 +154,7 @@ function submitCard(evt) {
       console.log(response);
     })
     .finally(() => {
+      buttons.cardSubmitButton.textContent = 'Create';
       cardFormPopup.close();
     })
 }
