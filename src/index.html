@@ -118,8 +118,8 @@
         </div>
       </section>
       <section class="modal update-avatar-modal">
-        <h2 class="modal__avatar-update-title"></h2>
-        <form class="modal__form-container">
+        <form id="avatar-form" class="modal__form-container update-avatar-container">
+          <h2 class="modal__form-title">Change profile picture</h2>
           <fieldset class="modal__form avatar-form">
             <label class="modal__label">
               <input
@@ -129,9 +129,11 @@
                 placeholder="Image URL"
                 required
               />
+              <span class="modal__error modal__error-type-avatar avatar-error">test</span>
               <button type="submit" id="avatar_submit_button" class="modal__button">Save</button>
             </label>
           </fieldset>
+          <button type="button" id="avatar_edit_cancel_button" class="modal__cancel-button" aria-label="cancel"></button>
         </form>
       </section>
     </main>

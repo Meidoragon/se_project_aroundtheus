@@ -19,7 +19,8 @@ export const VALIDATOR_OPTIONS = {
 
 export const FORM_SELECTORS = {
   profileFormSelector: 'profile-form',
-  addCardFormSelector: 'card-form'
+  addCardFormSelector: 'card-form',
+  avatarEditFormSelector: 'avatar-form'
 }
 
 export const FORM_ELEMENTS = {
@@ -32,6 +33,7 @@ export const SELECTORS = {
   profileEditor: '.profile-modal',
   imageModal: '.preview-modal',
   confirmationModal: '.confirmation-modal',
+  avatarModal: '.update-avatar-modal',
   cardTemplate: '#card_template',
 }
 
@@ -48,6 +50,7 @@ export const CARD_FIELDS = {
 export const BUTTON_ELEMENTS = {
   profileEditButton:  DOM.querySelector('.profile__edit-button'),
   addCardButton: DOM.querySelector('.profile__add-button'),
+  avatarEditButton: DOM.querySelector('.profile__avatar-overlay')
 }
 
 export const FIELD_ELEMENTS = {

@@ -35,6 +35,9 @@ profileFormPopup.setEventListeners();
 const cardFormPopup = new PopupWithForm(selectors.cardEditor, submitCard)
 cardFormPopup.setEventListeners();
 
+const avatarFormPopup = new PopupWithForm(selectors.avatarModal, submitAvatar);
+avatarFormPopup.setEventListeners();
+
 const cardDeletionConfirmation = new PopupConfirmation(selectors.confirmationModal, confirmDeletion)
 cardDeletionConfirmation.setEventListeners();
 
@@ -64,16 +67,18 @@ function submitProfile (evt) {
   profileFormPopup.close();
 }
 
+function submitAvatar (evt) {
+  evt.preventDefault();
+  console.log('we did it');
+}
+
 function createCard(item){
-  //ouroboros-chan...
   const handleCardClick = () => {
     imagePopup.open(card.getCardInfo());
   }
-
   const handleDeleteClick = () => {
     cardDeletionConfirmation.open(card)
   }
-
   const handleLikeClick = (isLiked) => {
     if (isLiked) {
       api.removeCardLike(card.getCardId());
@@ -81,7 +86,6 @@ function createCard(item){
       api.addCardLike(card.getCardId());
     }
   }
-
   const functions = {
     handleImageClick: handleCardClick,
     confirmDeletion: handleDeleteClick,
@@ -114,22 +118,24 @@ function renderCard(item) {
   gallery.appendItem(card);
 }
 
-// function renderCard(item) {
-//   const card = createCard(item);
-//   gallery.appendItem(card);
-// }
+
 
 //Event listeners. 
 buttons.profileEditButton.addEventListener('click', () => {
   const info = user.getUserInfo();
   fields.editorName.value = info.username;
   fields.editorDescription.value = info.description;
-  profileFormPopup.open();
   formValidators[formSelectors.profileFormSelector].resetValidation();
+  profileFormPopup.open();
 });
 buttons.addCardButton.addEventListener('click', () => {
-  cardFormPopup.open();
   formValidators[formSelectors.addCardFormSelector].resetValidation();
+  cardFormPopup.open();
+});
+buttons.avatarEditButton.addEventListener('click', () => {
+  console.log(formValidators);
+  formValidators[formSelectors.avatarEditFormSelector].resetValidation();
+  avatarFormPopup.open();
 });
 
 //Initialize API interactions
