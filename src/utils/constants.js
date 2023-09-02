@@ -64,6 +64,7 @@ export const OTHER_ELEMENTS = {
   galleryCardList: DOM.querySelector('.gallery__cards'),
   profileName: DOM.querySelector('.profile__name'),
   profileDescription: DOM.querySelector('.profile__description'),
+  profileAvatar: DOM.querySelector('.profile__avatar')
 }
 
 // export const INITIAL_CARDS = [

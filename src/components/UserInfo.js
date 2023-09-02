@@ -9,8 +9,10 @@
 export default class UserInfo{
   #nameElement;
   #descriptionElement;
+  #avatarElement;
   #name;
   #description;
+  #avatar;
   #sendInfo
 
   /**
@@ -20,17 +22,20 @@ export default class UserInfo{
    * @param {function} sendInfo function to update serverside user info
    */
   constructor(elements, userInfo, sendInfo){
-    //elements for name and description
+    //elements for name, description, and avatar
     this.#nameElement = elements.nameElement;
     this.#descriptionElement = elements.descriptionElement;
+    this.#avatarElement = elements.avatarElement;
 
-    //store name and description in object
+    //store name, description, and avatar in object
     this.#name = userInfo.name;
     this.#description = userInfo.about;
+    this.#avatar = userInfo.avatar;
 
-    //display name and description in page
+    //display name, description, and avatar in page
     this.#nameElement.textContent = this.#name;
     this.#descriptionElement.textContent = this.#description;
+    this.#avatarElement.src = this.#avatar;
 
     this.#sendInfo = sendInfo;
   }
@@ -56,5 +61,10 @@ export default class UserInfo{
       .catch((res) => {
         console.error(res);
       })
+  }
+
+  updateAvatar(newLink){
+    this.#avatar = newLink;
+    this.#avatarElement.src = newLink;
   }
 }

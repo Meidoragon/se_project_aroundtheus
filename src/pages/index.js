@@ -69,9 +69,11 @@ function submitProfile (evt) {
 
 function submitAvatar (evt) {
   evt.preventDefault();
-  // console.log(avatarFormPopup.getInputValues());
-  api.updateAvatar(avatarFormPopup.getInputValues());
-
+  api.updateAvatar(avatarFormPopup.getInputValues())
+    .then((result) => {
+      user.updateAvatar(result.avatar);
+    });
+  avatarFormPopup.close();
 }
 
 function createCard(item){
@@ -141,7 +143,10 @@ buttons.avatarEditButton.addEventListener('click', () => {
 const api = new API(apiOptions)
 Promise.all([api.getCardList(), api.getUserInfo()])
   .then(([cards, userInfo]) => {
-    const elements = {nameElement: elems.profileName, descriptionElement: elems.profileDescription};
+    const elements = {
+      nameElement: elems.profileName, 
+      descriptionElement: elems.profileDescription,
+      avatarElement: elems.profileAvatar};
     user = new UserInfo(elements, userInfo, updateUserInfo);
     gallery = new Section(cards, renderCard, elems.galleryCardList);
 
