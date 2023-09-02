@@ -28,7 +28,9 @@ export default class API {
     return fetch(`${this.#baseURL}/cards`, {
       method: "POST",
       headers: this.#headers,
-      body: JSON.stringify(item)
+      body: JSON.stringify({
+        avatar: item.avatar
+      })
     })
       .then(this.#handleResponse)
       .catch(this.#catchErrors);
@@ -61,7 +63,7 @@ export default class API {
       method: "PATCH",
       headers: this.#headers,
       body: JSON.stringify({
-        avatar: link,
+        avatar: link.avatar
       })
     })
       .then(this.#handleResponse)

@@ -69,7 +69,9 @@ function submitProfile (evt) {
 
 function submitAvatar (evt) {
   evt.preventDefault();
-  console.log('we did it');
+  // console.log(avatarFormPopup.getInputValues());
+  api.updateAvatar(avatarFormPopup.getInputValues());
+
 }
 
 function createCard(item){
@@ -118,8 +120,6 @@ function renderCard(item) {
   gallery.appendItem(card);
 }
 
-
-
 //Event listeners. 
 buttons.profileEditButton.addEventListener('click', () => {
   const info = user.getUserInfo();
@@ -133,7 +133,6 @@ buttons.addCardButton.addEventListener('click', () => {
   cardFormPopup.open();
 });
 buttons.avatarEditButton.addEventListener('click', () => {
-  console.log(formValidators);
   formValidators[formSelectors.avatarEditFormSelector].resetValidation();
   avatarFormPopup.open();
 });
