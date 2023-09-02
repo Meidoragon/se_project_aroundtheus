@@ -15,7 +15,7 @@ export default class API {
     }
   }
 
-  #catchErrors(response){
+  catchErrors(response){
     console.error(response);
   }
 
@@ -25,15 +25,13 @@ export default class API {
    * @returns object stating success, or the error string.
    */
   addNewCard(item){
+    console.log(item);
     return fetch(`${this.#baseURL}/cards`, {
       method: "POST",
       headers: this.#headers,
-      body: JSON.stringify({
-        avatar: item.avatar
-      })
+      body: JSON.stringify(item)
     })
       .then(this.#handleResponse)
-      .catch(this.#catchErrors);
   }
 
   patchUserInfo(newName, newDescription){
@@ -46,7 +44,6 @@ export default class API {
       })
     })
       .then(this.#handleResponse)
-      .catch(this.#catchErrors);
   }
 
   deleteCard(cardId){
@@ -55,7 +52,6 @@ export default class API {
       headers: this.#headers
     })
       .then(this.#handleResponse)
-      .catch(this.#catchErrors);
   }
 
   updateAvatar(link){
@@ -67,7 +63,6 @@ export default class API {
       })
     })
       .then(this.#handleResponse)
-      .catch(this.#catchErrors);
   }
 
   getUserInfo(){
@@ -75,7 +70,6 @@ export default class API {
       headers: this.#headers
     })
       .then(this.#handleResponse)
-      .catch(this.#catchErrors);
   }
 
   getCardList(){
@@ -83,7 +77,6 @@ export default class API {
       headers: this.#headers
     })
       .then(this.#handleResponse)
-      .catch(this.#catchErrors);
   }
 
   addCardLike(cardId){
@@ -92,7 +85,6 @@ export default class API {
       headers: this.#headers
     })
       .then(this.#handleResponse)
-      .catch(this.#catchErrors);
   }
 
   removeCardLike(cardId){
@@ -101,6 +93,5 @@ export default class API {
       headers: this.#headers
     })
       .then(this.#handleResponse)
-      .catch(this.#catchErrors);
   }
 }

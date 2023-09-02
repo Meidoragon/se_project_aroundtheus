@@ -6,6 +6,7 @@ TODO:
     Pick one.
   When loading images, either on initial load, or after creating a new one
     perhaps utilize .onload and .onerror to stop showing the image loads?
+  Error handler? Check for GET or POST failure, then depending on status, recur until a certain time limit is reached.
 */
 import './index.css';
 import Card from "../components/Card.js";
@@ -41,12 +42,15 @@ avatarFormPopup.setEventListeners();
 const cardDeletionConfirmation = new PopupConfirmation(selectors.confirmationModal, confirmDeletion)
 cardDeletionConfirmation.setEventListeners();
 
-//hold these variable names for me JS. Arigatou.
+/**
+ * these need to be named synchroniously so that they can be referenced before async code runs,
+ * yet still be instantiated in the async block.
+ * feels eerily similar to writing vba...
+ * 'dim gallery as object'
+ * www
+ */
 let gallery;
 let user;
-
-// const gallery = new Section(cards, renderCard, elems.galleryCardList)
-// gallery.renderItems();
 
 //Initialize validators
 const formValidators = {};
@@ -67,13 +71,9 @@ function submitProfile (evt) {
   profileFormPopup.close();
 }
 
-function submitAvatar (evt) {
-  evt.preventDefault();
-  api.updateAvatar(avatarFormPopup.getInputValues())
-    .then((result) => {
-      user.updateAvatar(result.avatar);
-    });
-  avatarFormPopup.close();
+function renderCard(item) {
+  const card = createCard(item);
+  gallery.appendItem(card);
 }
 
 function createCard(item){
@@ -84,12 +84,11 @@ function createCard(item){
     cardDeletionConfirmation.open(card)
   }
   const handleLikeClick = (isLiked) => {
-    if (isLiked) {
-      api.removeCardLike(card.getCardId());
-    } else {
+    return isLiked? 
+      api.removeCardLike(card.getCardId()):
       api.addCardLike(card.getCardId());
-    }
   }
+
   const functions = {
     handleImageClick: handleCardClick,
     confirmDeletion: handleDeleteClick,
@@ -97,6 +96,33 @@ function createCard(item){
 
   const card = new Card(item, functions, selectors.cardTemplate);
   return card.createCard();
+}
+
+//
+function updateUserInfo(newName, newDescription) {
+  return api.patchUserInfo(newName, newDescription);
+}
+
+// console.log(buttons.confirmationButton.textContent);
+// console.log(buttons.cardSubmitButton.textContent);
+// console.log(buttons.profileSubmitButton.textContent);
+// console.log(buttons.avatarSubmitButton.textContent);
+
+function submitAvatar (evt) {
+  evt.preventDefault();
+  buttons.avatarSubmitButton.textContent = 'Saving...';
+  api.updateAvatar(avatarFormPopup.getInputValues())
+    .then((result) => {
+      user.updateAvatar(result.avatar);
+    })
+    .catch((result) => {
+      console.error(`Error: ${result.status}`);
+    })
+    .finally(() => {
+      avatarFormPopup.close();
+      buttons.avatarSubmitButton.textContent = 'Save';
+    })
+  
 }
 
 function confirmDeletion(card){
@@ -112,14 +138,12 @@ function submitCard(evt) {
       const card = createCard(item);
       gallery.prependItem(card);
     })
+    .catch((response) => {
+      console.log(response);
+    })
     .finally(() => {
       cardFormPopup.close();
     })
-}
-
-function renderCard(item) {
-  const card = createCard(item);
-  gallery.appendItem(card);
 }
 
 //Event listeners. 
@@ -153,6 +177,3 @@ Promise.all([api.getCardList(), api.getUserInfo()])
     gallery.renderItems();
   });
 
-function updateUserInfo(newName, newDescription) {
-  return api.patchUserInfo(newName, newDescription);
-}

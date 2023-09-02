@@ -50,7 +50,11 @@ export const CARD_FIELDS = {
 export const BUTTON_ELEMENTS = {
   profileEditButton:  DOM.querySelector('.profile__edit-button'),
   addCardButton: DOM.querySelector('.profile__add-button'),
-  avatarEditButton: DOM.querySelector('.profile__avatar-overlay')
+  avatarEditButton: DOM.querySelector('.profile__avatar-overlay'),
+  profileSubmitButton: DOM.getElementById('profile-submit-button'),
+  cardSubmitButton: DOM.getElementById('card-submit-button'),
+  avatarSubmitButton: DOM.getElementById('avatar-submit-button'),
+  confirmationButton: DOM.getElementById('confirmation-button')
 }
 
 export const FIELD_ELEMENTS = {
