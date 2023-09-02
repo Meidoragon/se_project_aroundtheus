@@ -67,8 +67,24 @@ enableValidation(options);
 //Functions to pass to class objects
 function submitProfile (evt) {
   evt.preventDefault();
-  user.setUserInfo(profileFormPopup.getInputValues());
-  profileFormPopup.close();
+  buttons.profileSubmitButton.textContent = 'Saving...'
+
+  //TODO: look into finding a way to do this with one call to .getInputValues()
+  const param = {
+    name: profileFormPopup.getInputValues().username,
+    about: profileFormPopup.getInputValues().description
+  };
+  api.patchUserInfo(param)
+    .then((response) => {
+      user.setUserInfo(response)
+    })
+    .catch((response) => {
+      api.catchErrors(response);
+    })
+    .finally(() => {
+      profileFormPopup.close();
+      buttons.profileSubmitButton.textContent = 'Save';
+    })
 }
 
 function renderCard(item) {
@@ -100,6 +116,7 @@ function createCard(item){
 
 //
 function updateUserInfo(newName, newDescription) {
+  console.error('give me the stack trace');
   return api.patchUserInfo(newName, newDescription);
 }
 
@@ -116,7 +133,7 @@ function submitAvatar (evt) {
       user.updateAvatar(result.avatar);
     })
     .catch((result) => {
-      console.error(`Error: ${result.status}`);
+      api.catchErrors(result);
     })
     .finally(() => {
       avatarFormPopup.close();
@@ -171,7 +188,7 @@ Promise.all([api.getCardList(), api.getUserInfo()])
       nameElement: elems.profileName, 
       descriptionElement: elems.profileDescription,
       avatarElement: elems.profileAvatar};
-    user = new UserInfo(elements, userInfo, updateUserInfo);
+    user = new UserInfo(elements, userInfo);
     gallery = new Section(cards, renderCard, elems.galleryCardList);
 
     gallery.renderItems();

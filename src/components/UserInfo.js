@@ -21,7 +21,7 @@ export default class UserInfo{
    * @param {element} description element for description
    * @param {function} sendInfo function to update serverside user info
    */
-  constructor(elements, userInfo, sendInfo){
+  constructor(elements, userInfo){
     //elements for name, description, and avatar
     this.#nameElement = elements.nameElement;
     this.#descriptionElement = elements.descriptionElement;
@@ -36,8 +36,6 @@ export default class UserInfo{
     this.#nameElement.textContent = this.#name;
     this.#descriptionElement.textContent = this.#description;
     this.#avatarElement.src = this.#avatar;
-
-    this.#sendInfo = sendInfo;
   }
 
   /**
@@ -50,17 +48,11 @@ export default class UserInfo{
   /**
    * @param {object} param0 {username, description}; object containing info with which to update
    */
-  setUserInfo({username, description}){
-    this.#sendInfo(username, description)
-      .then((res) => {
-        this.#name = res.name;
-        this.#description = res.about;
-        this.#nameElement.textContent = res.name;
-        this.#descriptionElement.textContent = res.about;
-      })
-      .catch((res) => {
-        console.error(res);
-      })
+  setUserInfo(newInfo){
+    this.#name = newInfo.name;
+    this.#description = newInfo.about;
+    this.#nameElement.textContent = newInfo.name;
+    this.#descriptionElement.textContent = newInfo.about;
   }
 
   updateAvatar(newLink){

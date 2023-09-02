@@ -34,14 +34,11 @@ export default class API {
       .then(this.#handleResponse)
   }
 
-  patchUserInfo(newName, newDescription){
+  patchUserInfo(newInfo){
     return fetch (`${this.#baseURL}/users/me`, {
       method: "PATCH",
       headers: this.#headers,
-      body: JSON.stringify({
-        name: newName,
-        about: newDescription
-      })
+      body: JSON.stringify(newInfo)
     })
       .then(this.#handleResponse)
   }
