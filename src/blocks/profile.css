@@ -6,10 +6,44 @@
   padding-top: 36px;
 }
 
+.profile__avatar-container{
+  position: relative;
+  height: 120px;
+  width: 120px;
+}
+
 .profile__avatar{
   border-radius: 50%;
   height: 120px;
   width: 120px;
+}
+
+.profile__avatar-overlay{
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+  background-color: #000000BB;
+  background-image: url(../images/avatar_edit_button.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 26px;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0ms linear 200ms, opacity 200ms linear;
+}
+
+.profile__avatar-container:hover .profile__avatar-overlay{
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0ms;
+}
+
+.profile__avatar-overlay:hover{
+  visibility: visible;
+  opacity: 1;
 }
 
 .profile__information{
