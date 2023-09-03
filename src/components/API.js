@@ -15,14 +15,20 @@ export default class API {
     }
   }
 
+  /**
+   * Catch API related errors
+   * Currently just logs to console
+   * @param {Promise} response 
+   */
   catchErrors(response){
-    console.error(response);
+    //TODO: expand this
+    console.error(`Error: ${response.status}`);
   }
 
   /**
-   * 
+   * Send new card information to server
    * @param {object} item object with 'name' and 'link' elements containing the title of and link to an image to add
-   * @returns object stating success, or the error string.
+   * @returns {object} card object that was added.
    */
   addNewCard(item){
     return fetch(`${this.#baseURL}/cards`, {
@@ -33,6 +39,11 @@ export default class API {
       .then(this.#handleResponse)
   }
 
+  /**
+   * Send request to update user information stored on server
+   * @param {Object} newInfo {name, about}
+   * @returns {Object} containing updated user information
+   */
   patchUserInfo(newInfo){
     return fetch (`${this.#baseURL}/users/me`, {
       method: "PATCH",
@@ -42,6 +53,11 @@ export default class API {
       .then(this.#handleResponse)
   }
 
+  /**
+   * Send request to delete card from server
+   * @param {String} cardId id to delete
+   * @returns {object} {message} announcing success upon succes
+   */
   deleteCard(cardId){
     return fetch(`${this.#baseURL}/cards/${cardId}`, {
       method: "DELETE",
@@ -50,6 +66,11 @@ export default class API {
       .then(this.#handleResponse)
   }
 
+  /**
+   * 
+   * @param {string} link link to new image 
+   * @returns {object} updated user information object
+   */
   updateAvatar(link){
     return fetch (`${this.#baseURL}/users/me/avatar`, {
       method: "PATCH",
@@ -61,6 +82,10 @@ export default class API {
       .then(this.#handleResponse)
   }
 
+  /**
+   * Get current user information from server
+   * @returns {object} {name, about, avatar, _id}
+   */
   getUserInfo(){
     return fetch(`${this.#baseURL}/users/me`, {
       headers: this.#headers
@@ -68,6 +93,10 @@ export default class API {
       .then(this.#handleResponse)
   }
 
+  /**
+   * Get list of cards from server
+   * @returns {array} card Objects {createdAt, isLiked, link, name, owner, _id}
+   */
   getCardList(){
     return fetch(`${this.#baseURL}/cards`, {
       headers: this.#headers
@@ -75,6 +104,11 @@ export default class API {
       .then(this.#handleResponse)
   }
 
+  /**
+   * Send request to add like to card
+   * @param {string} cardId id for card
+   * @returns {object} updated card object
+   */
   addCardLike(cardId){
     return fetch(`${this.#baseURL}/cards/${cardId}/likes`, {
       method: "PUT",
@@ -83,6 +117,11 @@ export default class API {
       .then(this.#handleResponse)
   }
 
+  /**
+   * Send request to remove like from card
+   * @param {string} cardId id for card
+   * @returns {object} updated card object
+   */
   removeCardLike(cardId){
     return fetch(`${this.#baseURL}/cards/${cardId}/likes`, {
       method: "DELETE",

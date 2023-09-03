@@ -1,11 +1,3 @@
-/**
- * "The UserInfo class is responsible for rendering information about the user on the page."
- */
-
-/**
- * TODO: loose couple with API object to send requests serverside to update user info
- *    User info changes should not display until server replies with success response.
- */
 export default class UserInfo{
   #nameElement;
   #descriptionElement;
@@ -13,14 +5,12 @@ export default class UserInfo{
   #name;
   #description;
   #avatar;
-  #sendInfo
 
-  /**
-   * Manage getting and setting information in profile section of page
-   * @param {element} name element for name
-   * @param {element} description element for description
-   * @param {function} sendInfo function to update serverside user info
-   */
+/**
+ * Manage getting and setting information in profile section of page
+ * @param {object} elements {nameElement, descriptionElement, avatarElement} elements containing relevant profile information
+ * @param {object} userInfo {name, about, avatar} strings of user information to popuplate profile information on page
+ */
   constructor(elements, userInfo){
     //elements for name, description, and avatar
     this.#nameElement = elements.nameElement;
@@ -39,14 +29,16 @@ export default class UserInfo{
   }
 
   /**
-   * @returns object containing user info
+   * Gets name and description that are currently on page
+   * @returns {object} {username, description}
    */
   getUserInfo(){
     return {username: this.#name, description: this.#description};
   }
 
   /**
-   * @param {object} param0 {username, description}; object containing info with which to update
+   * Updates user information on page
+   * @param {object} newInfo {name, about} new information to add
    */
   setUserInfo(newInfo){
     this.#name = newInfo.name;
@@ -55,6 +47,10 @@ export default class UserInfo{
     this.#descriptionElement.textContent = newInfo.about;
   }
 
+  /**
+   * Replaces the current avatar image with the provided link
+   * @param {string} newLink link to replacement image 
+   */
   updateAvatar(newLink){
     this.#avatar = newLink;
     this.#avatarElement.src = newLink;

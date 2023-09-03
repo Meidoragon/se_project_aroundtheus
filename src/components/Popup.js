@@ -22,6 +22,10 @@ export default class Popup {
     }
   }
 
+  /**
+   * Handle DOM-wide click events while popup is open to check if popup should close
+   * @param {event} evt click event
+   */
   handleClick = (evt) => {
     const clickedElement = evt.target;
     if ((clickedElement.classList.contains('modal')) || 
@@ -30,16 +34,25 @@ export default class Popup {
     }
   }
 
+  /**
+   * opens popup
+   */
   open(){
     this.#popupElement.classList.add('modal_opened');
     document.addEventListener("keydown", this.#handleEscClose);
   }
 
+  /**
+   * closes popup
+   */
   close() {
     this.#popupElement.classList.remove('modal_opened');
     document.removeEventListener("keydown", this.#handleEscClose);
   }
 
+  /**
+   * sets event listeners 
+   */
   setEventListeners() {
     this.#popupElement.addEventListener("mousedown", this.handleClick);
   }

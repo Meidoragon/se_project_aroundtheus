@@ -1,7 +1,6 @@
 import Popup from './Popup.js';
 export default class PopupWithForm extends Popup{
 
-  #formFieldset
   #form
   #formFields
   #formSubmit

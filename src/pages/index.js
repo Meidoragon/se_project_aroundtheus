@@ -26,7 +26,6 @@ import {BUTTON_ELEMENTS as buttons,
         API_OPTIONS as apiOptions} from '../utils/constants.js';
 
 //Initialize (most) classes
-
 const imagePopup = new PopupWithImage(selectors.imageModal);
 imagePopup.setEventListeners();
 
@@ -101,8 +100,14 @@ function createCard(item){
   }
   const handleLikeClick = (isLiked) => {
     return isLiked? 
-      api.removeCardLike(card.getCardId()):
-      api.addCardLike(card.getCardId());
+      api.removeCardLike(card.getCardId())
+        .catch((response) => {
+          api.catchErrors(response);
+        }):
+      api.addCardLike(card.getCardId())
+        .catch((response) => {
+          api.catchErrors(response);
+        });
   }
 
   const functions = {
@@ -135,14 +140,9 @@ function confirmDeletion(card){
   buttons.confirmationButton.textContent = 'Deleting...'
   api.deleteCard(card.getCardId())
     .then((response) => {
-      //This if statement may not actually matter.
-      //if the post doesn't get deleted, we probably got a
-      //status code that results in us getting sent to the .catch() block
-      if (response.message = 'This post has been deleted') {
-        card.getCardElement().remove();
-        card = null;
-        cardDeletionConfirmation.close();
-      }
+      card.getCardElement().remove();
+      card = null;
+      cardDeletionConfirmation.close();
     })
     .catch((response) => {
       api.catchErrors(response)
@@ -198,5 +198,8 @@ Promise.all([api.getCardList(), api.getUserInfo()])
     gallery = new Section(cards, renderCard, elems.galleryCardList);
 
     gallery.renderItems();
+  })
+  .catch((response) => {
+    api.catchErrors(response);
   });
 

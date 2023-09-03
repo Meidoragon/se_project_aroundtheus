@@ -22,11 +22,19 @@ export default class PopupConfirmation extends Popup{
   #handleButtonClick = () => {
     this.#confirmAction(this.#card)
   }
+
+  /**
+   * Opens confirmation dialogue, and sets the target to card
+   * @param {Object} card 
+   */
   open(card){
     this.#card = card;
     super.open()
   }
 
+  /**
+   * Sets event listeners for popup
+   */
   setEventListeners(){
     super.setEventListeners()
     this.#buttonElement.addEventListener('mousedown', this.#handleButtonClick);
