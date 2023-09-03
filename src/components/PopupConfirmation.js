@@ -11,7 +11,7 @@ import Popup from './Popup.js';
 export default class PopupConfirmation extends Popup{
   #buttonElement
   #confirmAction
-  card
+  #card
 
   constructor (popupSelector, confirmAction){
     super(popupSelector);
@@ -20,12 +20,10 @@ export default class PopupConfirmation extends Popup{
   }
 
   #handleButtonClick = () => {
-    super.close();
-    this.#confirmAction(this.card);
+    this.#confirmAction(this.#card)
   }
-
   open(card){
-    this.card = card;
+    this.#card = card;
     super.open()
   }
 

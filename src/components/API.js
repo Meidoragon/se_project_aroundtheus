@@ -25,7 +25,6 @@ export default class API {
    * @returns object stating success, or the error string.
    */
   addNewCard(item){
-    console.log(item);
     return fetch(`${this.#baseURL}/cards`, {
       method: "POST",
       headers: this.#headers,

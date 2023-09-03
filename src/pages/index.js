@@ -114,11 +114,6 @@ function createCard(item){
   return card.createCard();
 }
 
-// console.log(buttons.confirmationButton.textContent);
-// console.log(buttons.cardSubmitButton.textContent);
-// console.log(buttons.profileSubmitButton.textContent);
-// console.log(buttons.avatarSubmitButton.textContent);
-
 function submitAvatar (evt) {
   evt.preventDefault();
   buttons.avatarSubmitButton.textContent = 'Saving...';
@@ -137,9 +132,24 @@ function submitAvatar (evt) {
 }
 
 function confirmDeletion(card){
-  api.deleteCard(card.getCardId());
-  card.getCardElement().remove();
-  card = null;
+  buttons.confirmationButton.textContent = 'Deleting...'
+  api.deleteCard(card.getCardId())
+    .then((response) => {
+      //This if statement may not actually matter.
+      //if the post doesn't get deleted, we probably got a
+      //status code that results in us getting sent to the .catch() block
+      if (response.message = 'This post has been deleted') {
+        card.getCardElement().remove();
+        card = null;
+        cardDeletionConfirmation.close();
+      }
+    })
+    .catch((response) => {
+      api.catchErrors(response)
+    })
+    .finally(() => {
+      buttons.confirmationButton.textContent = 'Yes'
+    })
 }
 
 function submitCard(evt) {
@@ -151,7 +161,7 @@ function submitCard(evt) {
       gallery.prependItem(card);
     })
     .catch((response) => {
-      console.log(response);
+      console.error(response);
     })
     .finally(() => {
       buttons.cardSubmitButton.textContent = 'Create';
