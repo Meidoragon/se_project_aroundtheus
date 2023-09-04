@@ -99,21 +99,21 @@ function createCard(item){
     cardDeletionConfirmation.open(card)
   }
   const handleLikeClick = (isLiked) => {
-    return isLiked? 
+    if (isLiked) {
       api.removeCardLike(card.getCardId())
-        .catch((response) => {
-          api.catchErrors(response);
-        }):
+        .then(response => card.setIsLiked(response.isLiked))
+        .catch(response => api.catchErrors(response));
+    } else {
       api.addCardLike(card.getCardId())
-        .catch((response) => {
-          api.catchErrors(response);
-        });
+        .then(response => card.setIsLiked(response.isLiked))
+        .catch(response => api.catchErrors(response));
+    }
   }
 
   const functions = {
     handleImageClick: handleCardClick,
     confirmDeletion: handleDeleteClick,
-    sendLikeInfo: handleLikeClick}
+    handleLikeClick: handleLikeClick}
 
   const card = new Card(item, functions, selectors.cardTemplate);
   return card.createCard();

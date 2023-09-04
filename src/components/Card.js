@@ -11,8 +11,7 @@ export default class Card{
   #cardImage;
   #handleImageClick
   #confirmDeletion
-  #sendLikeInfo
- 
+  #handleLikeClick
   
 
   /**
@@ -20,7 +19,7 @@ export default class Card{
    * @param {Object} item {link, name, _id} object containing the .text and image .link with which to make the card as well as the ._id of the card on the server
    * @param {Element} cardSelector the template element that gets used to build the card element
    */
-  constructor(item, {handleImageClick, confirmDeletion, sendLikeInfo}, cardSelector){
+  constructor(item, {handleImageClick, confirmDeletion, handleLikeClick}, cardSelector){
     this.#name = item.name;
     this.#link = item.link;
     this.#isLiked = item.isLiked;
@@ -28,7 +27,7 @@ export default class Card{
     this.#cardInfo = {title: this.#name, link: this.#link};
     this.#handleImageClick = handleImageClick;
     this.#confirmDeletion = confirmDeletion;
-    this.#sendLikeInfo = sendLikeInfo;
+    this.#handleLikeClick = handleLikeClick;
     this.#cardSelector = cardSelector;
 
     this.#cardElement = document
@@ -41,10 +40,11 @@ export default class Card{
     this.#cardImage = this.#cardElement.querySelector('.card__image');
   }
 
-  #handleLikeClick = () => {
-    this.#sendLikeInfo(this.#isLiked);
-    this.#likeButton.classList.toggle('card__button_type_like-active');
-  }
+  // #handleLikeClick = () => {
+  //   alert('hi');
+  //   this.#sendLikeInfo(this.#isLiked);
+  //   this.#likeButton.classList.toggle('card__button_type_like-active');
+  // }
 
   #handleDeleteClick = () => {
     this.#confirmDeletion();
@@ -52,7 +52,7 @@ export default class Card{
 
   #setEventListeners = () => {
     this.#likeButton.addEventListener('mousedown', () => {
-      this.#handleLikeClick();
+      this.#handleLikeClick(this.#isLiked);
     });
     this.#deleteButton.addEventListener('mousedown', () => {
       this.#handleDeleteClick();
@@ -60,6 +60,14 @@ export default class Card{
     this.#cardImage.addEventListener('mousedown', () => {
       this.#handleImageClick();
     })
+  }
+
+  #renderLikes(){
+    if (this.#isLiked) {
+      this.#likeButton.classList.add('card__button_type_like-active');
+    } else {
+      this.#likeButton.classList.remove('card__button_type_like-active');
+    }
   }
 
   /**
@@ -86,14 +94,16 @@ export default class Card{
     return this.#cardElement;
   }
 
+  setIsLiked(isLiked){
+    this.#isLiked = isLiked;
+    this.#renderLikes();
+  }
+
   /**
    * Creates and returns the entire card element, ready to be displayed.
    * @returns the card element to be added to the card grid
    */
   createCard = () => {
-    if (this.#isLiked) {
-      this.#likeButton.classList.add('card__button_type_like-active');
-    }
     const cardImage = this.#cardElement.querySelector('.card__image');
     const cardTitle = this.#cardElement.querySelector('.card__title');
 
@@ -101,6 +111,7 @@ export default class Card{
     cardImage.alt = this.#name;
     cardTitle.textContent = this.#name;
 
+    this.#renderLikes();
     this.#setEventListeners();
 
     return this.#cardElement
