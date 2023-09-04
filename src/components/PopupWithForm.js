@@ -12,12 +12,12 @@ export default class PopupWithForm extends Popup{
  * @param {string} popupSelector HTML element class name of modal to manage with this object
  * @param {function} handleFormSubmit
  */
-  constructor (popupSelector, handleFormSubmit, submitButton, loadingButtonText){
+  constructor (popupSelector, handleFormSubmit, loadingButtonText){
     super(popupSelector);
     this.#form = this.getPopupElement().querySelector('.modal__form-container');
     this.#formFields = this.#getFields();
     this.#formSubmit = handleFormSubmit;
-    this.#submitButton = submitButton;
+    this.#submitButton = this.#form.querySelector('.modal__button')
     this.#buttonText = this.#submitButton.textContent;
     this.#loadingButtonText = loadingButtonText;
   }

@@ -1,17 +1,9 @@
-/**
- * TODO: Turn this into a generic confirmation dialogue,
- *  instead of being specifically for card deletion
- *  Instead of sending a function in at creation, 
- *  send it in during open(). Then it can be used for
- *  any sort of confirmation on the page.
- */
-
 import Popup from './Popup.js';
 
 export default class PopupConfirmation extends Popup{
   #buttonElement
   #confirmAction
-  #card
+  #actionParams
   #buttonText
   #loadingButtonText
 
@@ -21,23 +13,34 @@ export default class PopupConfirmation extends Popup{
    * @param {Function} confirmAction action to take when confirmation is successful
    * @param {String} loadingButtonText text for submit button to show loading is in progress
    */
-  constructor (popupSelector, confirmAction, loadingButtonText){
+  constructor (popupSelector, action, loadingButtonText){
     super(popupSelector);
     this.#buttonElement = this.getPopupElement().querySelector('.modal__button')
-    this.#confirmAction = confirmAction;
     this.#loadingButtonText = loadingButtonText;
     this.#buttonText = this.#buttonElement.textContent;
   }
 
   #handleButtonClick = () => {
-    this.#confirmAction(this.#card)
+    this.#confirmAction(this.#actionParams)
+  }
+
+  /**
+   * set the action to take when confirmation succeeds
+   * @param {function} action function for action to take 
+   * @param {object} actionParams optional object of parameters to pass to 'action'. Key names should match with parameter names in 'action'.
+   */
+  setAction(action, actionParams){
+    this.#confirmAction = action;
+    if(actionParams){
+      this.#actionParams = actionParams;
+    }
   }
 
   /**
    * turn on changes to modal related to content loads
    */
   showLoading(){
-    this.#buttonElement.textContent = this.#loadingButtonText; //TODO: unhardcode this
+    this.#buttonElement.textContent = this.#loadingButtonText; 
   }
   
   /**
@@ -45,15 +48,6 @@ export default class PopupConfirmation extends Popup{
    */
   hideLoading(){
     this.#buttonElement.textContent = this.#buttonText;
-  }
-
-  /**
-   * Opens confirmation dialogue, and sets the target to card
-   * @param {Object} card 
-   */
-  open(card){
-    this.#card = card;
-    super.open()
   }
 
   /**

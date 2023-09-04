@@ -33,7 +33,6 @@ imagePopup.setEventListeners();
 const profileFormPopup = new PopupWithForm(
   selectors.profileEditor,
   submitProfile,
-  buttons.profileSubmitButton,
   'Saving...');
 profileFormPopup.setEventListeners();
 
@@ -41,7 +40,6 @@ profileFormPopup.setEventListeners();
 const cardFormPopup = new PopupWithForm(
   selectors.cardEditor,
   submitCard,
-  buttons.cardSubmitButton,
   'Saving...')
 cardFormPopup.setEventListeners();
 
@@ -49,7 +47,6 @@ cardFormPopup.setEventListeners();
 const avatarFormPopup = new PopupWithForm(
   selectors.avatarModal,
   submitAvatar,
-  buttons.avatarSubmitButton,
   'Saving...');
 avatarFormPopup.setEventListeners();
 
@@ -113,7 +110,8 @@ function createCard(item){
     imagePopup.open(card.getCardInfo());
   }
   const handleDeleteClick = () => {
-    cardDeletionConfirmation.open(card)
+    cardDeletionConfirmation.setAction(confirmDeletion, {card});
+    cardDeletionConfirmation.open();
   }
   const handleLikeClick = (isLiked) => {
     if (isLiked) {
@@ -154,7 +152,8 @@ function submitAvatar (evt) {
   
 }
 
-function confirmDeletion(card){
+function confirmDeletion({card}){
+  console.log(card)
   cardDeletionConfirmation.showLoading();
   api.deleteCard(card.getCardId())
     .then((response) => {
