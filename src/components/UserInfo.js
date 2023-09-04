@@ -2,9 +2,7 @@ export default class UserInfo{
   #nameElement;
   #descriptionElement;
   #avatarElement;
-  #name;
-  #description;
-  #avatar;
+
 
 /**
  * Manage getting and setting information in profile section of page
@@ -17,15 +15,9 @@ export default class UserInfo{
     this.#descriptionElement = elements.descriptionElement;
     this.#avatarElement = elements.avatarElement;
 
-    //store name, description, and avatar in object
-    this.#name = userInfo.name;
-    this.#description = userInfo.about;
-    this.#avatar = userInfo.avatar;
-
     //display name, description, and avatar in page
-    this.#nameElement.textContent = this.#name;
-    this.#descriptionElement.textContent = this.#description;
-    this.#avatarElement.src = this.#avatar;
+    this.setUserInfo(userInfo)
+    this.updateAvatar(userInfo.avatar)
   }
 
   /**
@@ -33,7 +25,7 @@ export default class UserInfo{
    * @returns {object} {username, description}
    */
   getUserInfo(){
-    return {username: this.#name, description: this.#description};
+    return {username: this.#nameElement.textContent, description: this.#descriptionElement.textContent};
   }
 
   /**
@@ -41,8 +33,6 @@ export default class UserInfo{
    * @param {object} newInfo {name, about} new information to add
    */
   setUserInfo(newInfo){
-    this.#name = newInfo.name;
-    this.#description = newInfo.about;
     this.#nameElement.textContent = newInfo.name;
     this.#descriptionElement.textContent = newInfo.about;
   }
@@ -52,7 +42,6 @@ export default class UserInfo{
    * @param {string} newLink link to replacement image 
    */
   updateAvatar(newLink){
-    this.#avatar = newLink;
     this.#avatarElement.src = newLink;
   }
 }
