@@ -29,16 +29,32 @@ import {BUTTON_ELEMENTS as buttons,
 const imagePopup = new PopupWithImage(selectors.imageModal);
 imagePopup.setEventListeners();
 
-const profileFormPopup = new PopupWithForm(selectors.profileEditor, submitProfile);
+// buttons.profileSubmitButton.textContent = 'Saving...'
+const profileFormPopup = new PopupWithForm(
+  selectors.profileEditor,
+  submitProfile,
+  buttons.profileSubmitButton,
+  'Saving...');
 profileFormPopup.setEventListeners();
 
-const cardFormPopup = new PopupWithForm(selectors.cardEditor, submitCard)
+// buttons.cardSubmitButton.textContent = 'Saving...';
+const cardFormPopup = new PopupWithForm(
+  selectors.cardEditor,
+  submitCard,
+  buttons.cardSubmitButton,
+  'Saving...')
 cardFormPopup.setEventListeners();
 
-const avatarFormPopup = new PopupWithForm(selectors.avatarModal, submitAvatar);
+// buttons.avatarSubmitButton.textContent = 'Saving...';
+const avatarFormPopup = new PopupWithForm(
+  selectors.avatarModal,
+  submitAvatar,
+  buttons.avatarSubmitButton,
+  'Saving...');
 avatarFormPopup.setEventListeners();
 
-const cardDeletionConfirmation = new PopupConfirmation(selectors.confirmationModal, confirmDeletion)
+// buttons.confirmationButton.textContent = 'Deleting...'
+const cardDeletionConfirmation = new PopupConfirmation(selectors.confirmationModal, confirmDeletion, 'Deleting...')
 cardDeletionConfirmation.setEventListeners();
 
 /**
@@ -66,13 +82,14 @@ enableValidation(options);
 //Functions to pass to class objects
 function submitProfile (evt) {
   evt.preventDefault();
-  buttons.profileSubmitButton.textContent = 'Saving...'
+  
 
   //TODO: look into finding a way to do this with one call to .getInputValues()
   const param = {
     name: profileFormPopup.getInputValues().username,
     about: profileFormPopup.getInputValues().description
   };
+  profileFormPopup.showLoading();
   api.patchUserInfo(param)
     .then((response) => {
       user.setUserInfo(response)
@@ -82,7 +99,7 @@ function submitProfile (evt) {
     })
     .finally(() => {
       profileFormPopup.close();
-      buttons.profileSubmitButton.textContent = 'Save';
+      profileFormPopup.hideLoading();
     })
 }
 
@@ -121,7 +138,7 @@ function createCard(item){
 
 function submitAvatar (evt) {
   evt.preventDefault();
-  buttons.avatarSubmitButton.textContent = 'Saving...';
+  avatarFormPopup.showLoading();
   api.updateAvatar(avatarFormPopup.getInputValues())
     .then((result) => {
       user.updateAvatar(result.avatar);
@@ -130,14 +147,14 @@ function submitAvatar (evt) {
       api.catchErrors(result);
     })
     .finally(() => {
+      avatarFormPopup.hideLoading();
       avatarFormPopup.close();
-      buttons.avatarSubmitButton.textContent = 'Save';
     })
   
 }
 
 function confirmDeletion(card){
-  buttons.confirmationButton.textContent = 'Deleting...'
+  cardDeletionConfirmation.showLoading();
   api.deleteCard(card.getCardId())
     .then((response) => {
       card.getCardElement().remove();
@@ -148,13 +165,13 @@ function confirmDeletion(card){
       api.catchErrors(response)
     })
     .finally(() => {
-      buttons.confirmationButton.textContent = 'Yes'
+      cardDeletionConfirmation.hideLoading();
     })
 }
 
 function submitCard(evt) {
   evt.preventDefault();
-  buttons.cardSubmitButton.textContent = 'Saving...';
+  cardFormPopup.showLoading();
   api.addNewCard(cardFormPopup.getInputValues())
     .then((item) => {
       const card = createCard(item);
@@ -164,7 +181,7 @@ function submitCard(evt) {
       console.error(response);
     })
     .finally(() => {
-      buttons.cardSubmitButton.textContent = 'Create';
+      cardFormPopup.hideLoading();
       cardFormPopup.close();
     })
 }

@@ -4,16 +4,22 @@ export default class PopupWithForm extends Popup{
   #form
   #formFields
   #formSubmit
+  #submitButton
+  #loadingButtonText
+  #buttonText
 /**
  * code for managing form popups
  * @param {string} popupSelector HTML element class name of modal to manage with this object
  * @param {function} handleFormSubmit
  */
-  constructor (popupSelector, handleFormSubmit){
+  constructor (popupSelector, handleFormSubmit, submitButton, loadingButtonText){
     super(popupSelector);
     this.#form = this.getPopupElement().querySelector('.modal__form-container');
     this.#formFields = this.#getFields();
     this.#formSubmit = handleFormSubmit;
+    this.#submitButton = submitButton;
+    this.#buttonText = this.#submitButton.textContent;
+    this.#loadingButtonText = loadingButtonText;
   }
 
   #getFields(){
@@ -22,6 +28,20 @@ export default class PopupWithForm extends Popup{
       retObj[item.id] = item;
     })
     return retObj;
+  }
+
+  /**
+   * turn on changes to modal related to content loads
+   */
+  showLoading(){
+    this.#submitButton.textContent = this.#loadingButtonText;
+  }
+  
+  /**
+   * turn off changes to modal related to content loads
+   */
+  hideLoading(){
+    this.#submitButton.textContent = this.#buttonText;
   }
 
   /**
