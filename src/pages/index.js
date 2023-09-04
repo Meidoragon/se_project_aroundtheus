@@ -93,12 +93,12 @@ function submitProfile (evt) {
   api.patchUserInfo(param)
     .then((response) => {
       user.setUserInfo(response)
+      profileFormPopup.close();
     })
     .catch((response) => {
       api.catchErrors(response);
     })
     .finally(() => {
-      profileFormPopup.close();
       profileFormPopup.hideLoading();
     })
 }
@@ -142,13 +142,14 @@ function submitAvatar (evt) {
   api.updateAvatar(avatarFormPopup.getInputValues())
     .then((result) => {
       user.updateAvatar(result.avatar);
+      avatarFormPopup.close();
     })
     .catch((result) => {
       api.catchErrors(result);
     })
     .finally(() => {
       avatarFormPopup.hideLoading();
-      avatarFormPopup.close();
+      
     })
   
 }
@@ -157,7 +158,7 @@ function confirmDeletion(card){
   cardDeletionConfirmation.showLoading();
   api.deleteCard(card.getCardId())
     .then((response) => {
-      card.getCardElement().remove();
+      card.remove();
       card = null;
       cardDeletionConfirmation.close();
     })
@@ -176,13 +177,13 @@ function submitCard(evt) {
     .then((item) => {
       const card = createCard(item);
       gallery.prependItem(card);
+      cardFormPopup.close();
     })
     .catch((response) => {
       console.error(response);
     })
     .finally(() => {
       cardFormPopup.hideLoading();
-      cardFormPopup.close();
     })
 }
 

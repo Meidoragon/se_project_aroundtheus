@@ -99,6 +99,11 @@ export default class Card{
     this.#renderLikes();
   }
 
+  remove(){
+    this.#cardElement.remove();
+    this.#cardElement = null;
+  }
+
   /**
    * Creates and returns the entire card element, ready to be displayed.
    * @returns the card element to be added to the card grid
