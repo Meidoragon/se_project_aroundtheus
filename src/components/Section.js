@@ -3,7 +3,7 @@
  */
 
 export default class Section {
-  #renderedItems
+  #items
   #renderer
   #container
   
@@ -14,7 +14,7 @@ export default class Section {
    * @param {element} element element to which the items are added
    */
   constructor(items, renderer, element) {
-    this.#renderedItems = items;
+    this.#items = items;
     this.#renderer = renderer;
     this.#container = element;
   }
@@ -39,7 +39,7 @@ export default class Section {
    * render initial list of items
    */
   renderItems(){
-    this.#renderedItems.forEach((item) => {
+    this.#items.forEach((item) => {
       this.#renderer(item);
     });
   }
