@@ -20,11 +20,8 @@ Around the US allows users to comfortably view, like, and add images, as well as
 * Grid layout in order to adapt layout and to allow the number of images to scale properly
 * OOP to organize the script logic
 * Webpack
-  
-**Figma**  
-  
-* [Link to the project on Figma](https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1)  
-  
+* API Calls to store and retrieve information saved between sessions
+
 **Images**  
   
 ![Showcase of project features](../assets/around_US_showcase.gif?raw=true)
@@ -34,5 +31,5 @@ Around the US allows users to comfortably view, like, and add images, as well as
 
 **TODO** 
 
-* Using the spacing values from the brief, determine if any of them can be represented by a simple calc(Xvw - Ypx) to allow meeting the design requirements for some of them without using media queries. Not because it should be done, but because I want to know. Main example that interested me was the copywrite text in the footer. 
-* Save changes made by user for use between sessions.
+* Using the spacing values from the brief, determine if any of them can be represented by a simple calc(Xvw - Ypx) to allow meeting the design requirements for some of them without using media queries.
+* Expand the HTTP error handler to have different behavior depending on the received status code.
