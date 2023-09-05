@@ -16,15 +16,18 @@
     </header>
     <main>
       <section class="profile">
-        <img
-          class="profile__avatar"
-          alt="Jacques Cousteau"
-          src="<%=require('./images/jacques-cousteau.png')%>"
-        />
+        <div class="profile__avatar-container">
+          <img
+            class="profile__avatar"
+            alt="User avatar"
+            src="#"
+          />
+          <div class="profile__avatar-overlay"></div>
+        </div>
         <div class="profile__information">
-          <h1 class="profile__name">Jacques Cousteau</h1>    
+          <h1 class="profile__name"></h1>    
           <button class="profile__edit-button" type="button" aria-label="edit profile"></button>
-          <p class="profile__description">Explorer</p>
+          <p class="profile__description"></p>
         </div>
         <button class="profile__add-button" type="button" aria-label="add card"></button>
       </section>
@@ -39,14 +42,14 @@
             <label class='modal__label'>
               <input
                 type="text"
-                id="name"
+                id="username"
                 class="modal__input name-input"
                 placeholder="Name"
                 minlength=2
                 maxlength=40
                 required
               />
-              <span class="modal__error name-error"></span>
+              <span class="modal__error username-error"></span>
             </label>
             <label class="modal__label">
               <input
@@ -60,9 +63,8 @@
               />
               <span class="modal__error description-error"></span>
             </label>
-            <button type="submit" id="profile_submit_button" class="modal__button">Save</button>
+            <button type="submit" id="profile-submit-button" class="modal__button">Save</button>
           </fieldset>
-          
           <button type="button" id="profile_cancel_button" class="modal__cancel-button" aria-label="cancel"></button>
         </form>
       </section>
@@ -73,26 +75,26 @@
             <label class='modal__label'>
               <input
                 type="text"
-                id="title"
+                id="name"
                 class="modal__input title-input"
                 placeholder="Title"
                 minlength=1
                 maxlength=30
                 required
               />
-              <span class="modal__error title-error"></span>
+              <span class="modal__error name-error"></span>
             </label>
             <label class='modal__label'>
               <input
                 type="url"
-                id="url"
+                id="link"
                 class="modal__input link-input"
                 placeholder="Image URL"
                 required
               />
-              <span class="modal__error url-error"></span>
+              <span class="modal__error link-error"></span>
             </label>
-            <button type="submit" id="card_submit_button" class="modal__button">Create</button>
+            <button type="submit" id="card-submit-button" class="modal__button">Create</button>
           </fieldset>
           <button type="button" id="card_cancel_button" class="modal__cancel-button" aria-label="cancel"></button>
         </form>
@@ -107,6 +109,32 @@
           <h2 class="modal__image-title">.</h2>
           <button type="button" id="preview_cancel_button" class="modal__cancel-button modal__image-cancel-button" aria-label="cancel"></button>
         </div>
+      </section>
+      <section class="modal confirmation-modal">
+        <div class ="modal__confirmation-container">
+          <h2 class="modal__confirmation-title">Are you sure?</h2>
+          <button type="button" id="confirmation-button" class="modal__button">Yes</button>
+          <button type="button" id="confirmation_cancel_button" class="modal__cancel-button" aria-label="cancel"></button>
+        </div>
+      </section>
+      <section class="modal update-avatar-modal">
+        <form id="avatar-form" class="modal__form-container update-avatar-container">
+          <h2 class="modal__form-title">Change profile picture</h2>
+          <fieldset class="modal__form avatar-form">
+            <label class="modal__label">
+              <input
+                type="url"
+                id="avatar"
+                class="modal__input avatar-input"
+                placeholder="Image URL"
+                required
+              />
+              <span class="modal__error modal__error-type-avatar avatar-error">test</span>
+              <button type="submit" id="avatar-submit-button" class="modal__button">Save</button>
+            </label>
+          </fieldset>
+          <button type="button" id="avatar_edit_cancel_button" class="modal__cancel-button" aria-label="cancel"></button>
+        </form>
       </section>
     </main>
     <footer class="footer">

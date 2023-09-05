@@ -1,38 +1,47 @@
-/**
- * "The UserInfo class is responsible for rendering information about the user on the page."
- */
 export default class UserInfo{
   #nameElement;
   #descriptionElement;
-  #name;
-  #description;
+  #avatarElement;
 
-  /**
-   * Manage getting and setting information in profile section of page
-   * @param {element} name element for name
-   * @param {element} description element for description
-   */
-  constructor(name, description){
-    this.#nameElement = name;
-    this.#descriptionElement = description;
-    this.#name = this.#nameElement.textContent;
-    this.#description = this.#descriptionElement.textContent
+
+/**
+ * Manage getting and setting information in profile section of page
+ * @param {object} elements {nameElement, descriptionElement, avatarElement} elements containing relevant profile information
+ * @param {object} userInfo {name, about, avatar} strings of user information to popuplate profile information on page
+ */
+  constructor(elements, userInfo){
+    //elements for name, description, and avatar
+    this.#nameElement = elements.nameElement;
+    this.#descriptionElement = elements.descriptionElement;
+    this.#avatarElement = elements.avatarElement;
+
+    //display name, description, and avatar in page
+    this.setUserInfo(userInfo)
+    this.updateAvatar(userInfo.avatar)
   }
 
   /**
-   * @returns object containing user info
+   * Gets name and description that are currently on page
+   * @returns {object} {username, description}
    */
   getUserInfo(){
-    return {name: this.#name, description: this.#description};
+    return {username: this.#nameElement.textContent, description: this.#descriptionElement.textContent};
   }
 
   /**
-   * @param {array} param0 array containing user info [0] = name, [1] = description
+   * Updates user information on page
+   * @param {object} newInfo {name, about} new information to add
    */
-  setUserInfo({name, description}){
-    this.#name = name;
-    this.#description = description;
-    this.#nameElement.textContent = this.#name;
-    this.#descriptionElement.textContent = this.#description;
+  setUserInfo(newInfo){
+    this.#nameElement.textContent = newInfo.name;
+    this.#descriptionElement.textContent = newInfo.about;
+  }
+
+  /**
+   * Replaces the current avatar image with the provided link
+   * @param {string} newLink link to replacement image 
+   */
+  updateAvatar(newLink){
+    this.#avatarElement.src = newLink;
   }
 }

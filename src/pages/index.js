@@ -4,37 +4,65 @@ TODO:
     either find the element outside of the class and send that, 
     or send the selector and find it in the class.
     Pick one.
+  When loading images, either on initial load, or after creating a new one
+    perhaps utilize .onload and .onerror to stop showing the image loads?
+  Error handler? Check for GET or POST failure, then depending on status, recur until a certain time limit is reached.
 */
 import './index.css';
 import Card from "../components/Card.js";
 import Section from "../components/Section.js";
+import PopupConfirmation from '../components/PopupConfirmation';
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
-import FormValidator from '../components/FormValidator';
+import FormValidator from '../components/FormValidator.js';
+import API from '../components/API.js';
 import {BUTTON_ELEMENTS as buttons,
         FORM_SELECTORS as formSelectors,
         SELECTORS as selectors,
         OTHER_ELEMENTS as elems,
         FIELD_ELEMENTS as fields,
-        INITIAL_CARDS as cards,
-        VALIDATOR_OPTIONS as options } from '../utils/constants.js';
-
+        VALIDATOR_OPTIONS as options,
+        API_OPTIONS as apiOptions} from '../utils/constants.js';
 
 //Initialize (most) classes
-const user = new UserInfo(elems.profileName, elems.profileDescription);
-
 const imagePopup = new PopupWithImage(selectors.imageModal);
 imagePopup.setEventListeners();
 
-const profileFormPopup = new PopupWithForm(selectors.profileEditor, submitProfile);
+// buttons.profileSubmitButton.textContent = 'Saving...'
+const profileFormPopup = new PopupWithForm(
+  selectors.profileEditor,
+  submitProfile,
+  'Saving...');
 profileFormPopup.setEventListeners();
 
-const cardFormPopup = new PopupWithForm(selectors.cardEditor, submitCard)
+// buttons.cardSubmitButton.textContent = 'Saving...';
+const cardFormPopup = new PopupWithForm(
+  selectors.cardEditor,
+  submitCard,
+  'Saving...')
 cardFormPopup.setEventListeners();
 
-const gallery = new Section(cards, renderCard, elems.galleryCardList)
-gallery.renderItems();
+// buttons.avatarSubmitButton.textContent = 'Saving...';
+const avatarFormPopup = new PopupWithForm(
+  selectors.avatarModal,
+  submitAvatar,
+  'Saving...');
+avatarFormPopup.setEventListeners();
+
+// buttons.confirmationButton.textContent = 'Deleting...'
+const cardDeletionConfirmation = new PopupConfirmation(selectors.confirmationModal, confirmDeletion, 'Deleting...')
+cardDeletionConfirmation.setEventListeners();
+
+/**
+ * these need to be named synchroniously so that they can be referenced before async code runs,
+ * yet still be instantiated in the async block.
+ * feels eerily similar to writing vba...
+ * 'dim gallery as object'
+ * www
+ */
+let gallery;
+let user;
 
 //Initialize validators
 const formValidators = {};
@@ -51,25 +79,25 @@ enableValidation(options);
 //Functions to pass to class objects
 function submitProfile (evt) {
   evt.preventDefault();
-  user.setUserInfo(profileFormPopup.getInputValues());
-  profileFormPopup.close();
-}
+  
 
-function createCard(item){
-  //ouroboros-chan...
-  const handleCardClick = () => {
-    imagePopup.open(card.getCardInfo());
-  }
-  const card = new Card(item, handleCardClick, selectors.cardTemplate);
-  return card.createCard();
-}
-
-function submitCard(evt) {
-  evt.preventDefault();
-  const item = cardFormPopup.getInputValues();
-  const card = createCard(item);
-  gallery.prependItem(card);
-  cardFormPopup.close();
+  //TODO: look into finding a way to do this with one call to .getInputValues()
+  const param = {
+    name: profileFormPopup.getInputValues().username,
+    about: profileFormPopup.getInputValues().description
+  };
+  profileFormPopup.showLoading();
+  api.patchUserInfo(param)
+    .then((response) => {
+      user.setUserInfo(response)
+      profileFormPopup.close();
+    })
+    .catch((response) => {
+      api.catchErrors(response);
+    })
+    .finally(() => {
+      profileFormPopup.hideLoading();
+    })
 }
 
 function renderCard(item) {
@@ -77,15 +105,118 @@ function renderCard(item) {
   gallery.appendItem(card);
 }
 
+function createCard(item){
+  const handleCardClick = () => {
+    imagePopup.open(card.getCardInfo());
+  }
+  const handleDeleteClick = () => {
+    cardDeletionConfirmation.setAction(confirmDeletion, {card});
+    cardDeletionConfirmation.open();
+  }
+  const handleLikeClick = (isLiked) => {
+    if (isLiked) {
+      api.removeCardLike(card.getCardId())
+        .then(response => card.setIsLiked(response.isLiked))
+        .catch(response => api.catchErrors(response));
+    } else {
+      api.addCardLike(card.getCardId())
+        .then(response => card.setIsLiked(response.isLiked))
+        .catch(response => api.catchErrors(response));
+    }
+  }
+
+  const functions = {
+    handleImageClick: handleCardClick,
+    confirmDeletion: handleDeleteClick,
+    handleLikeClick: handleLikeClick}
+
+  const card = new Card(item, functions, selectors.cardTemplate);
+  return card.createCard();
+}
+
+function submitAvatar (evt) {
+  evt.preventDefault();
+  avatarFormPopup.showLoading();
+  api.updateAvatar(avatarFormPopup.getInputValues())
+    .then((result) => {
+      user.updateAvatar(result.avatar);
+      avatarFormPopup.close();
+    })
+    .catch((result) => {
+      api.catchErrors(result);
+    })
+    .finally(() => {
+      avatarFormPopup.hideLoading();
+      
+    })
+  
+}
+
+function confirmDeletion({card}){
+  console.log(card)
+  cardDeletionConfirmation.showLoading();
+  api.deleteCard(card.getCardId())
+    .then((response) => {
+      card.remove();
+      card = null;
+      cardDeletionConfirmation.close();
+    })
+    .catch((response) => {
+      api.catchErrors(response)
+    })
+    .finally(() => {
+      cardDeletionConfirmation.hideLoading();
+    })
+}
+
+function submitCard(evt) {
+  evt.preventDefault();
+  cardFormPopup.showLoading();
+  api.addNewCard(cardFormPopup.getInputValues())
+    .then((item) => {
+      const card = createCard(item);
+      gallery.prependItem(card);
+      cardFormPopup.close();
+    })
+    .catch((response) => {
+      console.error(response);
+    })
+    .finally(() => {
+      cardFormPopup.hideLoading();
+    })
+}
+
 //Event listeners. 
 buttons.profileEditButton.addEventListener('click', () => {
   const info = user.getUserInfo();
-  fields.editorName.value = info.name;
+  fields.editorName.value = info.username;
   fields.editorDescription.value = info.description;
-  profileFormPopup.open();
   formValidators[formSelectors.profileFormSelector].resetValidation();
+  profileFormPopup.open();
 });
 buttons.addCardButton.addEventListener('click', () => {
-  cardFormPopup.open();
   formValidators[formSelectors.addCardFormSelector].resetValidation();
+  cardFormPopup.open();
 });
+buttons.avatarEditButton.addEventListener('click', () => {
+  formValidators[formSelectors.avatarEditFormSelector].resetValidation();
+  avatarFormPopup.open();
+});
+
+//Initialize API interactions
+const api = new API(apiOptions)
+Promise.all([api.getCardList(), api.getUserInfo()])
+  .then(([cards, userInfo]) => {
+    const elements = {
+      nameElement: elems.profileName, 
+      descriptionElement: elems.profileDescription,
+      avatarElement: elems.profileAvatar};
+    user = new UserInfo(elements, userInfo);
+    gallery = new Section(cards, renderCard, elems.galleryCardList);
+
+    gallery.renderItems();
+  })
+  .catch((response) => {
+    api.catchErrors(response);
+  });
+
